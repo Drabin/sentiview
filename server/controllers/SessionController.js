@@ -1,6 +1,6 @@
 var Session = require('../models/SessionModel.js');
 var moment = require('moment');
-
+var fs = require('fs');
 module.exports = {
   createSession: function(req, res) {
     // Dummy data for now in: title, description, subject, and duration
@@ -92,6 +92,8 @@ module.exports = {
       'transcript': req.body.transcript
     }).then(function(session){
       res.send(201)
+    }).catch(function(err) {
+      console.error(err);
     })
   },
   
@@ -107,5 +109,30 @@ module.exports = {
     .catch(function(err) {
       console.error(err);
     })
+  },
+
+  sessionNotes: function(req, res) {
+    new Session({
+      'id' : req.body.sessionId
+    }).save({
+      'notes': req.body.notes
+    }).then(function(session){
+      res.send(201)
+    }).catch(function(err) {
+      console.error(err);
+    })
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
