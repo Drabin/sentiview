@@ -10,7 +10,7 @@ io.on('connection', function(socket){
 
   socket.on('message', function(data) {
   	console.log('---------------------', data)
-  	io.sockets.in(data.receiver).emit('sendingMessage', data);
+  	io.sockets.in(data.receiver).emit('message', data);
   }); 
 
 });

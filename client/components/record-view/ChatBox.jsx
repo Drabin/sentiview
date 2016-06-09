@@ -15,7 +15,7 @@ export default class ChatBox extends React.Component {
 	}
 
 	componentDidMount() {
-	    join(1);
+	    join(this.props.userId);
 	};
  
   onTranscriptChange(e){
@@ -28,11 +28,14 @@ export default class ChatBox extends React.Component {
     this.setState({ 
         transcript: this.state.transcript.concat([this.state.transcriptPart])
     })
-    sendMessage(1, 1, this.state.transcript);
+    sendMessage(this.props.userId, this.props.calledUser, this.state.transcript);
     this.setState({
       transcriptPart: ''
     })
   }
+  socket.on('message', function(data){
+    console.log(data);
+  })
 
   saveTranscript(){
     console.log('---------------', this.props.currentSession)
