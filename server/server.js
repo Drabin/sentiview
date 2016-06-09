@@ -16,10 +16,6 @@ var http = require('http').Server(app);
 exports.io = require('socket.io')(http);
 require('./controllers/SocketsController.js');
 
-// var server = require('http').createServer(app);
-// var ExpressPeerServer = require('peer').ExpressPeerServer;
-// app.use('/peerjs', ExpressPeerServer(server, { debug: true }));
-
 // Initial Configuration, Static Assets, & View Engine Configuration
 require('./config/initialize.js')(app, express);
 // Authentication Middleware: Express Sessions, Passport Strategy
