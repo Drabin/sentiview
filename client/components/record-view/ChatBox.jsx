@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { socket, join, sendMessage } from '../../Sockets.js';
 import $ from 'jquery';
-import Notes from './Notes.jsx'
+
 
 export default class ChatBox extends React.Component {
 	constructor(props) {
