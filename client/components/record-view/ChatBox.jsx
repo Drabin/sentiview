@@ -101,9 +101,9 @@ export default class ChatBox extends React.Component {
     return (
       <div className="record-questions pure-u-1-1">
         <div className="chatbox">
-          <ul>
+          <ul className="chatboxlist">
             {this.state.transcript.map(function(mes){
-              return <li> {mes} </li>; 
+              return <li className="chatboxlist"> {mes} </li>; 
             })}
           </ul>
         </div>
