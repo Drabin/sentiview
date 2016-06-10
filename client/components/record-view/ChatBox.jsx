@@ -27,15 +27,15 @@ export default class ChatBox extends React.Component {
   sendTranscript(){
     this.setState({ 
         transcript: this.state.transcript.concat([this.state.transcriptPart])
-    })
+    });
     sendMessage(this.props.userId, this.props.calledUser, this.state.transcript);
     this.setState({
       transcriptPart: ''
-    })
+    });
+    socket.on('message', function(data){
+      console.log(data);
+    });
   }
-  socket.on('message', function(data){
-    console.log(data);
-  })
 
   saveTranscript(){
     console.log('---------------', this.props.currentSession)
