@@ -34,7 +34,7 @@ export default class ChatBox extends React.Component {
     });
     socket.on('message', function(data){
       console.log(data);
-    })
+    });
   }
 
   saveTranscript(){
