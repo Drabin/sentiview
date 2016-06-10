@@ -1,7 +1,6 @@
 var Session = require('../models/SessionModel.js');
 var moment = require('moment');
 var fs = require('fs');
-var User = require('../models/UserModel.js');
 
 module.exports = {
   createSession: function(req, res) {
@@ -28,7 +27,7 @@ module.exports = {
   },
 
   getInterviewerSessions: function(req, res) {
-    Session.where({ interviewerId: req.user.id }).where('duration', '<>', 'Temporary Duration').fetchAll()
+    Session.where({ interviewerId: req.user.id }).fetchAll()
       .then(function(sessions) {
         res.status(200).send(sessions);
       })
@@ -38,7 +37,7 @@ module.exports = {
   },
 
   getIntervieweeSessions: function(req, res) {
-    Session.where({ intervieweeId: req.user.id }).where('duration', '<>', 'Temporary Duration').fetchAll()
+    Session.where({ intervieweeId: req.user.id }).fetchAll()
       .then(function(sessions) {
         res.status(200).send(sessions);
       })
@@ -94,7 +93,7 @@ module.exports = {
     }).save({
       'transcript': req.body.transcript
     }).then(function(session){
-      res.send(201)
+      res.status(200).send(session);
     }).catch(function(err) {
       console.error(err);
     })
@@ -115,27 +114,28 @@ module.exports = {
   },
 
   sessionNotes: function(req, res) {
-    new Session({
-      'id' : req.body.sessionId
-    }).save({
-      'notes': req.body.notes
-    }).then(function(session){
-      res.send(201)
-    }).catch(function(err) {
-      console.error(err);
+    console.log(req.body);
+    var notes = req.body.notes;
+    var session = req.body.session;
+    fs.writeFile(__dirname + "/" + session, notes, function(err) {
+      if(err) {
+        return console.error(err);
+      }
+
+      console.log("The file was saved!");
+    });
+  },
+
+  loadSessionNotes: function(req, res) {
+    var parsedUrl = req.url.split('/');
+    var endPoint = parsedUrl[parsedUrl.length - 1];
+    fs.readFile(__dirname + '/' + endPoint, 'utf8', function(err, data){
+      if(err) {
+        return console.error(err);
+      }
+      res.status(201).send(data)
     })
-  }
-
-
-
-
-
-
-
-
-
-
-
+  },
 
 
 }

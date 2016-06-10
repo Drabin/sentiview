@@ -1,5 +1,5 @@
 import React from 'react';
-
+import $ from 'jquery';
 
 export default class Emailform extends React.Component {
   constructor(props) {
@@ -22,21 +22,18 @@ export default class Emailform extends React.Component {
 
 
   emailNotes() {
-    
-    var emailInfo = {
-      notes: this.props.notes,
-      sub: this.state.sub,
-      sender: this.state.sender,
-      receiver: this.state.receiver,
-    }
+    var sessionId = this.props.session;
+    var notes = this.props.notes;
+    var sub = this.state.sub;
+    var receiver = this.state.receiver;
     $.ajax({
           method:'POST',
           url: '/emailnotes',
           data: {       
-            notes: emailInfo.notes,
-            sub: emailnotes.sub,
-            sender: emailnotes.sub,
-            receiver: emailnotes.receiver
+            sessionId: sessionId,
+            notes: notes,
+            sub: sub,
+            receiver: receiver
           },
           success: function() {
             console.log('Email sent');
