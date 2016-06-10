@@ -65,7 +65,7 @@ exports.updatePeerId = function(req, res) {
 exports.getUserNames = function(req, res) {
     User.where({ id: req.query.sender }).fetch()
     .then(function(model){
-      res.status(200).send(model.get('firstName'));
+      res.status(200).send(model.attributes.firstName);
     }).catch(function(err) {
       console.error(err);
     })
