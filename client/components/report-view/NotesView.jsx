@@ -1,20 +1,23 @@
 import React from 'react';
 import $ from 'jquery';
+import Emailform from './Emailform.jsx'
 
 export default class SessionTranscript extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			currentUserId: null,
+			showEmailForm: false,
 			showSavedNotes: false,
-			notes: null,
+			notes: '',
 		};
 		this.keyPress = this.keyPress.bind(this);
 	}
 
 	componentDidMount() {
-      this._getUserId();
+      if(!this.state.notes === ''){      	
       this.getSavedNotes();
+      }
     }
 
 	onNotesChange(e){
@@ -30,21 +33,6 @@ export default class SessionTranscript extends React.Component {
 		  })
 		}	
 	}
-    _getUserId() {
-	    $.ajax({
-	      type: 'GET',
-	      url: '/api/users',
-	      success: function(currentUser) {
-	        this.setState({
-	          currentUserId: currentUser.id
-	          });
-	        console.log(this.state.currentUserId);
-	        }.bind(this),
-	        error: function(error) {
-	          console.error('Error getting user', error);
-	        }
-	    })
-    }
 
     getSavedNotes() {
     	var sessionId = $(location).attr('href').split('/');
@@ -83,9 +71,25 @@ export default class SessionTranscript extends React.Component {
 	    });
 	}
 
+	toggleEmailForm(){
+      if(this.state.showEmailForm){
+        this.setState({
+          showEmailForm: false
+        })
+      } else {
+        this.setState({
+          showEmailForm: true
+        })
+      }
+    }
+
 	render(){
 		return (
 			<div>
+			  <span onClick={this.toggleEmailForm.bind(this)}>Email notes
+			  	< Emailform session={this.props.sessionId}
+			  	notes={this.state.notes}/>
+			  </span>
 			  <span className="savednote">Notes saved!</span>
 			  <textarea rows="30" cols="100"// value={this.state.notes}
               value={this.state.notes}

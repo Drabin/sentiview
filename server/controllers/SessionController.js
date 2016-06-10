@@ -1,6 +1,8 @@
 var Session = require('../models/SessionModel.js');
 var moment = require('moment');
 var fs = require('fs');
+var User = require('../models/UserModel.js');
+
 module.exports = {
   createSession: function(req, res) {
     // Dummy data for now in: title, description, subject, and duration
