@@ -862,8 +862,8 @@ var RecordView = function (_React$Component) {
             }
             loadPrompt();
 
-            receiverVideo.src = window.URL.createObjectURL(stream);
-            callerVideo.src = window.URL.createObjectURL(window.localStream);
+            receiverVideo.src = window.URL.createObjectURL(window.localStream);
+            callerVideo.src = window.URL.createObjectURL(stream);
             window.peerStream = remoteStream;
             window.existingCall = call;
             console.log('RECEIVED REMOTE STREAM', remoteStream);
@@ -1109,8 +1109,8 @@ var RecordView = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'pure-u-2-3 record-box' },
-          _react2.default.createElement('video', { id: 'callerwebcam', className: 'pure-u-1-2 record-webcam', autoplay: true }),
-          _react2.default.createElement('video', { id: 'receiverwebcam', className: 'pure-u-1-2 record-webcam', autoplay: true }),
+          _react2.default.createElement('video', { id: 'callerwebcam', className: 'pure-u-3-4 record-webcam', autoplay: true }),
+          _react2.default.createElement('video', { id: 'receiverwebcam', className: 'pure-u-1-8 record-webcam', autoplay: true }),
           _react2.default.createElement('img', { id: 'current-snapshot', src: '' })
         ),
         _react2.default.createElement(

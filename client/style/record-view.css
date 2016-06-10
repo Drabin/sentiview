@@ -26,8 +26,13 @@ video#webcam {
   position: relative;
 }
 
-.record-webcam {
+/*.record-webcam {
   margin-right: 10px;
+}*/
+
+#receiverwebcam {
+  z-index: 1000;
+  margin-left: -12.5%;
 }
 
 .pure-button-error {
