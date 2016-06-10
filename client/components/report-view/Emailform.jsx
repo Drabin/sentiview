@@ -59,7 +59,7 @@ export default class Emailform extends React.Component {
               value={this.state.receiver} placeholder="Email"></input>
             </fieldset>
 
-            <button type='button' onClick={this.emailNotes.bind(this)} className="record-form-button pure-button pure-input-1-2 pure-button-primary">Send</button>
+            <button className="emailbutn" type='button' onClick={this.emailNotes.bind(this)} className="record-form-button pure-button pure-input-1-2 pure-button-primary">Send</button>
           </form>
       </div>
     )

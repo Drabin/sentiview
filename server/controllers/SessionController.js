@@ -117,7 +117,7 @@ module.exports = {
     console.log(req.body);
     var notes = req.body.notes;
     var session = req.body.session;
-    fs.writeFile(__dirname + "/" + session, notes, function(err) {
+    fs.writeFile(__dirname + "/../notes/" + session, notes, function(err) {
       if(err) {
         return console.error(err);
       }
@@ -129,7 +129,7 @@ module.exports = {
   loadSessionNotes: function(req, res) {
     var parsedUrl = req.url.split('/');
     var endPoint = parsedUrl[parsedUrl.length - 1];
-    fs.readFile(__dirname + '/' + endPoint, 'utf8', function(err, data){
+    fs.readFile(__dirname + '/../notes/' + endPoint, 'utf8', function(err, data){
       if(err) {
         return console.error(err);
       }
