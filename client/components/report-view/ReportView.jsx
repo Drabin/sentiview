@@ -150,7 +150,9 @@ export default class ChartComponent extends React.Component {
           <span><button onClick={this.toggleNotesView.bind(this)}>Notes</button></span>
         </div>
         <div>
-          { this.state.showTranscript ?  <Transcript sessionId={this.props.params.sessionId} /> : null}
+          { this.state.showTranscript ?  
+            <Transcript sessionId={this.props.params.sessionId} /> 
+            : null}
         </div>
         <div>
           { this.state.showNotes ?  <Notes sessionId={this.props.params.sessionId} /> : null}

@@ -62,15 +62,16 @@ export default class ChatBox extends React.Component {
     this.setState({
       transcriptPart: this.state.sender + ': ' + this.state.transcript
     })
-    console.log("HHHHHHEEEEEYYYYY", this.state.transcriptPart)
+    //console.log("HHHHHHEEEEEYYYYY", this.state.transcriptPart)
     this.setState({ 
         transcript: this.state.transcript.concat([this.state.transcriptPart])
     })
-    console.log("HHHHHHEEEEEYYYYY", this.state.transcript)
+    console.log("HHHHHHEEEEEYYYYY", this.state.calledUser)
     sendMessage(this.props.userId, this.props.calledUser, this.state.transcript);
     this.setState({
       transcriptPart: ''
     })
+    console.log('SENDER AFTER  ', this.state.sender);
   }
 
 
@@ -114,7 +115,7 @@ export default class ChatBox extends React.Component {
         </div>
 		    <div className="button-bar">
           <button className="stop-button pure-button pure-button-error" 
-          onClick={(e) => {this.saveTranscript(); 
+          onClick={(e) => {this.saveTranscript; 
             this.props.clicked(e)}}>Stop</button>
 		    </div>
 			</div>

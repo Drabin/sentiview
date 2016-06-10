@@ -11,10 +11,10 @@ export default class SessionTranscript extends React.Component {
 			showSavedNotes: false,
 			notes: '',
 		};
-		this.keyPress = this.keyPress.bind(this);
 	}
 
 	componentDidMount() {     	
+      this.saveNotes();
       this.getSavedNotes();
     }
 
@@ -23,13 +23,6 @@ export default class SessionTranscript extends React.Component {
 			notes: e.target.value
 		});
 		
-	}
-
-	keyPress(e){
-		if(e.key === 'Enter'){			
-		  this.setState({
-		  })
-		}	
 	}
 
     getSavedNotes() {
@@ -49,7 +42,6 @@ export default class SessionTranscript extends React.Component {
     }
 
 	saveNotes(){
-		var userId = this.state.currentUserID;
 		var sessionId = $(location).attr('href').split('/');
 		var notes = this.state.notes;
 		$.ajax({
@@ -88,10 +80,9 @@ export default class SessionTranscript extends React.Component {
 			  	{ this.state.showEmailForm ? < Emailform session={this.props.sessionId} notes={this.state.notes}/> : null}
 			  </span>
 			  <span className="savednote">Notes saved!</span>
-			  <textarea rows="30" cols="100"// value={this.state.notes}
+			  <textarea rows="30" cols="100"
               value={this.state.notes}
-			  onChange={this.onNotesChange.bind(this)}
-			  onKeyPress={(e) => this.keyPress(e)}>
+			  onChange={this.onNotesChange.bind(this)}>
 			  </textarea>
 			<span>  
 			  <button onClick={this.saveNotes.bind(this)}>Save Notes</button>
