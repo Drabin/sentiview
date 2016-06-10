@@ -91,8 +91,8 @@ export default class RecordView extends React.Component {
           }
           loadPrompt();
 
-          receiverVideo.src = window.URL.createObjectURL(stream);
-          callerVideo.src = window.URL.createObjectURL(window.localStream);
+          receiverVideo.src = window.URL.createObjectURL(window.localStream);
+          callerVideo.src = window.URL.createObjectURL(stream);
           window.peerStream = remoteStream;
           window.existingCall = call;
           console.log('RECEIVED REMOTE STREAM', remoteStream);
@@ -336,10 +336,9 @@ export default class RecordView extends React.Component {
     return (
       <div className="pure-g record-container">
         <div className="pure-u-2-3 record-box">
-          <video id='callerwebcam' className="pure-u-1-2 record-webcam" autoplay></video>
-          <video id='receiverwebcam' className="pure-u-1-2 record-webcam" autoplay></video>
+          <video id='callerwebcam' className="pure-u-3-4 record-webcam" autoplay></video>
+          <video id='receiverwebcam' className="pure-u-1-8 record-webcam" autoplay></video>
           <img id='current-snapshot' src=''/>
-
         </div>
         <div className="pure-u-1-3 record-form">
           <RecordInstructions clicked={this._createNewSession.bind(this)}/>
