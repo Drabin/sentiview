@@ -85,7 +85,8 @@ module.exports = {
       });
   },
   
-  sessionTranscript: function(req, res){
+
+  sessionTranscript: function(req, res) {
     new Session({
       'id' : req.body.session
     }).save({

@@ -12,6 +12,7 @@ var sendMessage = function(sender, receiver, text) {
     sender,
     receiver
   };
+  console.log()
   socket.emit('message', msg);
 };
 
