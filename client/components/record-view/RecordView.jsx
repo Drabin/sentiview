@@ -333,8 +333,8 @@ export default class RecordView extends React.Component {
     return (
       <div className="pure-g record-container">
         <div className="pure-u-2-3 record-box">
-          <video id='callerwebcam' className="pure-u-1-4 record-webcam" autoplay></video>
-          <video id='receiverwebcam' className="pure-u-1-4 record-webcam" autoplay></video>
+          <video id='callerwebcam' className="pure-u-1-2 record-webcam" autoplay></video>
+          <video id='receiverwebcam' className="pure-u-1-2 record-webcam" autoplay></video>
           <img id='current-snapshot' src=''/>
 
         </div>

@@ -26,6 +26,10 @@ video#webcam {
   position: relative;
 }
 
+.record-webcam {
+  margin-right: 10px;
+}
+
 .pure-button-error {
     background: rgb(202, 60, 60);
     color: white;
