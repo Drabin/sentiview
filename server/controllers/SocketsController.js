@@ -5,7 +5,7 @@ io.on('connection', function(socket){
   console.log('a user connected ____________________');
   socket.on('join', function(data){
   	socket.join(data.userId);
-  	console.log('__________________________', data.userId)
+  	console.log('MMMMMMMMMMM', data.userId)
   })
 
   socket.on('message', function(data) {
@@ -14,4 +14,3 @@ io.on('connection', function(socket){
   }); 
 
 });
-

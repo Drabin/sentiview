@@ -8,6 +8,7 @@ module.exports = function(app) {
   app.put('/api/users', UserController.updateUser);
   app.get('/api/users/getCalledUser', UserController.getCalledUser);
   app.post('/api/users/updatePeerId', UserController.updatePeerId);
+  app.get('/usernames', UserController.getUserNames);
 
   app.get('/api/session/interviewer',  SessionController.getInterviewerSessions);
   app.get('/api/session/interviewee',  SessionController.getIntervieweeSessions);

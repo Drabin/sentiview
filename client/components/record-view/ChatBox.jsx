@@ -10,16 +10,46 @@ export default class ChatBox extends React.Component {
 		this.state = {
 			transcript: [],
       transcriptPart: '',
+      sender: null,
+      receiver: null
     };
   socket.on('message', function(data){
-    console.log(data);
-  })
+    this.getMessage(data.message);
+  }.bind(this))
     this.saveTranscript = this.saveTranscript.bind(this)
+    this.sendMessage = sendMessage.bind(this)
   }
 
   componentDidMount() {
       join(this.props.userId);
+      this.getUserNames();
+
   };
+  getMessage(message){
+      this.setState({
+      transcript: this.state.transcript.concat([message])
+    })
+  }
+
+  getUserNames() {
+    $.ajax({
+      method:'GET',
+      url: '/usernames',
+      data: {
+        sender: this.props.userId,
+      },
+      success: function(data) {
+        console.log('fetched name----', data);
+        this.setState({
+          sender: data
+        }).bind(this);
+      },
+      error: function(error) {
+        console.error('failed to get name', error);
+      },
+      dataType: 'json'
+    });
+  }
  
   onTranscriptChange(e){
     this.setState({
@@ -28,9 +58,15 @@ export default class ChatBox extends React.Component {
   }
 
   sendTranscript(){
+    console.log('THIS---', this.state.sender);
+    this.setState({
+      transcriptPart: this.state.sender + ': ' + this.state.transcript
+    })
+    console.log("HHHHHHEEEEEYYYYY", this.state.transcriptPart)
     this.setState({ 
         transcript: this.state.transcript.concat([this.state.transcriptPart])
     })
+    console.log("HHHHHHEEEEEYYYYY", this.state.transcript)
     sendMessage(this.props.userId, this.props.calledUser, this.state.transcript);
     this.setState({
       transcriptPart: ''
