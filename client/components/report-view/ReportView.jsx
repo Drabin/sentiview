@@ -72,6 +72,7 @@ export default class ChartComponent extends React.Component {
   }
 
   componentDidMount () {
+    console.log('PROPS________________', this.props.params)
     $.ajax({
       type: 'GET',
       url: '/api/snapshot',
@@ -80,7 +81,6 @@ export default class ChartComponent extends React.Component {
         console.error('error while fetching report data', error);
       },
       success: function(sessionData) {
-        console.log('____________________________________', sessionData)
         console.log(sessionData);
 
         var sadness = 0;
@@ -114,6 +114,8 @@ export default class ChartComponent extends React.Component {
           console.log(this.state);
       }.bind(this)
     })
+    $
+
   };
 
   toggleTranscriptView(){
@@ -148,10 +150,10 @@ export default class ChartComponent extends React.Component {
           <span><button onClick={this.toggleNotesView.bind(this)}>Notes</button></span>
         </div>
         <div>
-          { this.state.showTranscript ?  <Transcript /> : null}
+          { this.state.showTranscript ?  <Transcript sessionId={this.props.params.sessionId} /> : null}
         </div>
         <div>
-          { this.state.showNotes ?  <Notes /> : null}
+          { this.state.showNotes ?  <Notes sessionId={this.props.params.sessionId} /> : null}
         </div>
         <div style={styles.graphContainer}>
           <h3>Mood Chart</h3>
