@@ -72,7 +72,7 @@ var App = function (_React$Component) {
           _reactRouter.Route,
           { path: '/', component: _MainLayout2.default },
           _react2.default.createElement(_reactRouter.IndexRoute, { component: _HomeView2.default }),
-          _react2.default.createElement(_reactRouter.Route, { path: 'record', component: _RecordView2.default }),
+          _react2.default.createElement(_reactRouter.Route, { path: 'record(/:sessionId)', component: _RecordView2.default }),
           _react2.default.createElement(_reactRouter.Route, { path: 'sessions/interviewer', component: _InterviewerSessionsView2.default }),
           _react2.default.createElement(_reactRouter.Route, { path: 'sessions/interviewee', component: _IntervieweeSessionsView2.default }),
           _react2.default.createElement(_reactRouter.Route, { path: 'reports/:sessionId', component: _ReportView2.default }),
@@ -697,7 +697,8 @@ var RecordView = function (_React$Component) {
   }, {
     key: '_listenPeerConnection',
     value: function _listenPeerConnection() {
-      var video = document.querySelector('#webcam');
+      var receiverVideo = document.querySelector('#receiverwebcam');
+      var callerVideo = document.querySelector('#callerwebcam');
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
       var currId = this.state.currentUserId;
@@ -728,18 +729,17 @@ var RecordView = function (_React$Component) {
           // can prompt the user here if they want to answer or not
           call.answer(stream);
           call.on('stream', function (remoteStream) {
-            // find way to check state to see if they are interviewee or not - if they are, generate session
+            window.localStream = remoteStream;
             var role = calledGenerateSession();
-            console.log('CALLED USER', role);
             if (role === 'Interviewee') {
-              console.log('STARTED RECORDING');
               startRecording();
             }
             loadPrompt();
 
-            video.src = window.URL.createObjectURL(stream);
+            receiverVideo.src = window.URL.createObjectURL(stream);
+            callerVideo.src = window.URL.createObjectURL(window.localStream);
+            window.peerStream = remoteStream;
             window.existingCall = call;
-            console.log('CREATED VIDEO', video);
             console.log('RECEIVED REMOTE STREAM', remoteStream);
           });
         }, function (error) {
@@ -750,7 +750,8 @@ var RecordView = function (_React$Component) {
   }, {
     key: '_callPeer',
     value: function _callPeer() {
-      var video = document.querySelector('#webcam');
+      var callerVideo = document.querySelector('#callerwebcam');
+      var receiverVideo = document.querySelector('#receiverwebcam');
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
       var startRecording = this._startRecording.bind(this);
@@ -759,18 +760,19 @@ var RecordView = function (_React$Component) {
 
       // Call connection
       navigator.getUserMedia({ video: true, audio: true }, function (stream) {
+        // changed from stream to window.localStream
+        window.localStream = stream;
         var call = this.state.peer.call(this.state.calledUserPeerId, stream);
         console.log('call', call);
         call.on('stream', function (remoteStream) {
-          console.log('CALLING USER', role);
+          window.peerStream = remoteStream;
           if (role === 'Interviewee') {
-            console.log('STARTED RECORDING');
             startRecording();
           }
           loadPrompt();
-          video.src = window.URL.createObjectURL(stream);
+          callerVideo.src = window.URL.createObjectURL(stream);
+          receiverVideo.src = window.URL.createObjectURL(window.peerStream);
           window.existingCall = call;
-          console.log('CREATED VIDEO', video);
           console.log('RECEIVED REMOTE STREAM', remoteStream);
         });
       }.bind(this), function (error) {
@@ -804,10 +806,15 @@ var RecordView = function (_React$Component) {
             url: '/api/session',
             data: formData,
             success: function (newSession) {
+              var _this2 = this;
+
               console.log('New Session: ' + newSession.id);
               this.setState({
                 sessionId: newSession.id
-              }, this._callPeer.bind(this));
+              }, function () {
+                _this2._callPeer.call(_this2);
+                _reactRouter.browserHistory.push('/record/' + _this2.state.sessionId.toString());
+              });
             }.bind(this),
             error: function error(_error2) {
               console.error('startRecording error', _error2);
@@ -826,7 +833,7 @@ var RecordView = function (_React$Component) {
         async: false,
         data: { id: this.state.currentUserId },
         success: function (newSession) {
-          var _this2 = this;
+          var _this3 = this;
 
           console.log('session being created', newSession);
           console.log('current user', this.state.currentUserId);
@@ -839,7 +846,7 @@ var RecordView = function (_React$Component) {
             sessionId: newSession.id,
             role: role
           }, function () {
-            return console.log('role after success', _this2.state.role);
+            _reactRouter.browserHistory.push('/record/' + _this3.state.sessionId.toString());
           });
         }.bind(this),
         error: function error(_error3) {
@@ -872,7 +879,7 @@ var RecordView = function (_React$Component) {
     key: '_startRecording',
     value: function _startRecording() {
       var intervalId = setInterval(function () {
-        _FACE2.default.webcam.takePicture('webcam', 'current-snapshot');
+        _FACE2.default.webcam.takePicture('callerwebcam', 'current-snapshot');
         this._takeSnapshot();
       }.bind(this), 2000);
 
@@ -934,7 +941,7 @@ var RecordView = function (_React$Component) {
 
         // Wait 2 seconds after stop button is pressed
         setTimeout(function () {
-          _FACE2.default.webcam.stopPlaying('webcam');
+          _FACE2.default.webcam.stopPlaying('callerwebcam');
         }.bind(this), 2000);
       }
       _reactRouter.browserHistory.push('/reports/' + this.state.sessionId.toString());
@@ -976,7 +983,8 @@ var RecordView = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'pure-u-2-3 record-box' },
-          _react2.default.createElement('video', { id: 'webcam', className: 'pure-u-1-1 record-webcam', autoplay: true }),
+          _react2.default.createElement('video', { id: 'callerwebcam', className: 'pure-u-1-4 record-webcam', autoplay: true }),
+          _react2.default.createElement('video', { id: 'receiverwebcam', className: 'pure-u-1-2 record-webcam', autoplay: true }),
           _react2.default.createElement('img', { id: 'current-snapshot', src: '' })
         ),
         _react2.default.createElement(

@@ -20,7 +20,7 @@ export default class App extends React.Component {
       <Router history={browserHistory}>
         <Route path="/" component={MainLayout}>
           <IndexRoute component={HomeView} />
-          <Route path="record" component={RecordView} />
+          <Route path="record(/:sessionId)" component={RecordView} />
           <Route path="sessions/interviewer" component={InterviewerSessionsView} />
           <Route path="sessions/interviewee" component={IntervieweeSessionsView} />
           <Route path="reports/:sessionId" component={ReportView} />
