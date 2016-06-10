@@ -14,10 +14,8 @@ export default class SessionTranscript extends React.Component {
 		this.keyPress = this.keyPress.bind(this);
 	}
 
-	componentDidMount() {
-      if(!this.state.notes === ''){      	
+	componentDidMount() {     	
       this.getSavedNotes();
-      }
     }
 
 	onNotesChange(e){
@@ -86,9 +84,8 @@ export default class SessionTranscript extends React.Component {
 	render(){
 		return (
 			<div>
-			  <span onClick={this.toggleEmailForm.bind(this)}>Email notes
-			  	< Emailform session={this.props.sessionId}
-			  	notes={this.state.notes}/>
+			  <span> <button onClick={this.toggleEmailForm.bind(this)}>Email notes</button>
+			  	{ this.state.showEmailForm ? < Emailform session={this.props.sessionId} notes={this.state.notes}/> : null}
 			  </span>
 			  <span className="savednote">Notes saved!</span>
 			  <textarea rows="30" cols="100"// value={this.state.notes}

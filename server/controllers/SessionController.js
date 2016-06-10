@@ -1,7 +1,6 @@
 var Session = require('../models/SessionModel.js');
 var moment = require('moment');
 var fs = require('fs');
-var User = require('../models/UserModel.js');
 
 module.exports = {
   createSession: function(req, res) {
@@ -134,13 +133,9 @@ module.exports = {
       if(err) {
         return console.error(err);
       }
-      console.log('--------------',data);
       res.status(201).send(data)
     })
-  }
-
-
-
+  },
 
 
 }
