@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/chkakaja/sentimize.svg?branch=master)](https://travis-ci.org/chkakaja/sentimize)
-[![Stories in Ready](https://badge.waffle.io/chkakaja/sentimize.png?label=ready&title=Ready)](https://waffle.io/chkakaja/sentimize)
 # Sentimize
 
   Sentimize provides human emotion analysis during video recording for interviews and training.
@@ -38,7 +36,7 @@ Session Overview:
   Start by cloning the latest version of Sentimize on your local machine by running:
 
   ```sh
-  $ git clone https://github.com/chkakaja/sentimize
+  $ git clone https://github.com/crypticzoologists/sentimize
   $ cd sentimize
   ```
 
@@ -94,6 +92,8 @@ Session Overview:
 ##### Front end:
 - React
 - Face Analysis Cloud Engine API by Sightcorp
+- PeerJS
+- Socket.io
 - Browserify
 - Chartjs
 - Babel
@@ -157,9 +157,9 @@ Session Overview:
 ```
 
 ## Team
-  - Product Owner:            Christian Haug
-  - Scrum Master:             Jack Zhang
-  - Development Team Members: Christian Haug, Jack Zhang, Kani Munidasa, Katherine Hao
+  - Product Owner:            [Chris Ng](https://github.com/chrisng93)
+  - Scrum Master:             [Will Tang](https://github.com/willwtang)
+  - Development Team Members: [Chris Ng](https://github.com/chrisng93), [Will Tang](https://github.com/willwtang), [Daniel Rabinovich](https://github.com/Drabin)
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
