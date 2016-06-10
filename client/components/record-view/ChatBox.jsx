@@ -10,13 +10,16 @@ export default class ChatBox extends React.Component {
 		this.state = {
 			transcript: [],
       transcriptPart: '',
-		};
+    };
+  socket.on('message', function(data){
+    console.log(data);
+  })
     this.saveTranscript = this.saveTranscript.bind(this)
-	}
+  }
 
-	componentDidMount() {
-	    join(this.props.userId);
-	};
+  componentDidMount() {
+      join(this.props.userId);
+  };
  
   onTranscriptChange(e){
     this.setState({
@@ -33,9 +36,7 @@ export default class ChatBox extends React.Component {
       transcriptPart: ''
     })
   }
-  socket.on('message', function(data){
-    console.log(data);
-  })
+
 
   saveTranscript(){
     console.log('---------------', this.props.currentSession)
@@ -62,11 +63,13 @@ export default class ChatBox extends React.Component {
 	render(){
 	  return (
 			<div className="record-questions pure-u-1-1">
-        <ul className="chatbox">
-          {this.state.transcript.map(function(mes){
-            return <li> {mes} </li>; 
-          })}
-        </ul>
+        <div className="chatbox">
+          <ul>
+            {this.state.transcript.map(function(mes){
+              return <li> {mes} </li>; 
+            })}
+          </ul>
+        </div>
         <div className="button-bar">        
             <input onChange={this.onTranscriptChange.bind(this)}
              type="text" value={this.state.transcriptPart}> 

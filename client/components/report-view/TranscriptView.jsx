@@ -5,12 +5,24 @@ export default class SessionTranscript extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			transcriptArray: null
+			transcriptArray: null,
 		};
+	
 	}
 	componentDidMount() {
+		console.log('hello');
+		this.getTranscript(function(data) {
+			this.setState({
+				transcriptArray: data.transcript
+			})
+		})
+		console.log(this.state.currentUser);
+	}
+
+
+	getTranscript(callback) {
 		var sessionId = $(location).attr('href').split('/');
-		$.ajax({
+	  	$.ajax({
 			methond:'GET',
 			url: '/transcript/' + sessionId[sessionId.length - 1],
 			success: function(data){
@@ -22,17 +34,15 @@ export default class SessionTranscript extends React.Component {
 			},
 			datatype: 'json'
 		})
-
+	
 	}
 	
 
-	render(){
+	render() {
 		return (
 		<div>
-		  <ul>
-		    <li>hello</li>
-		  </ul>
-		</div>
+		  hello
+		</div>	
 		)
 	}
 

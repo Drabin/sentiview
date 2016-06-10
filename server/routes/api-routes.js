@@ -17,6 +17,7 @@ module.exports = function(app) {
   app.post('/transcript', SessionController.sessionTranscript);
   app.get('/transcript/*', SessionController.loadSessionTranscript);
   app.post('/notes', SessionController.sessionNotes);
+  app.get('/notes/*', SessionController.loadSessionNotes);
 
   app.get('/api/snapshot', SnapshotController.getSnapshots);
   app.post('/api/snapshot', SnapshotController.createSnapshot);
