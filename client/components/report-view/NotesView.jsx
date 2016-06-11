@@ -11,10 +11,11 @@ export default class SessionTranscript extends React.Component {
 			showSavedNotes: false,
 			notes: '',
 		};
+		this.getSavedNotes = this.getSavedNotes.bind(this);
 	}
 
 	componentDidMount() {     	
-      this.saveNotes();
+      
       this.getSavedNotes();
     }
 

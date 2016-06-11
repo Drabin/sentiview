@@ -11,7 +11,7 @@ export default class ChatBox extends React.Component {
       transcript: [],
       transcriptPart: '',
       sender: null,
-      receiver: null
+      receiver: null, 
     };
   socket.on('message', function(data){
     this.getMessage(data.message);
@@ -22,6 +22,7 @@ export default class ChatBox extends React.Component {
 
   componentDidMount() {
       join(this.props.userId);
+      this.getInterviewee()
       this.getUserNames();
 
   };
@@ -29,6 +30,24 @@ export default class ChatBox extends React.Component {
       this.setState({
       transcript: this.state.transcript.concat([message])
     })
+  }
+
+  getInterviewee() {
+    var sessionId = $(location).attr('href').split('/');
+    $.ajax({
+      method:'GET',
+      url: '/interviewer/' + sessionId[sessionId.length - 1],
+      success: function(data) {
+        console.log('fetched interviewer----', data);
+        this.setState({
+          receiver: data
+        })
+      }.bind(this),
+      error: function(error) {
+        console.error('failed to get interviewer', error);
+      },
+      dataType: 'json'
+    }); 
   }
 
   getUserNames() {
@@ -42,8 +61,8 @@ export default class ChatBox extends React.Component {
         console.log('fetched name----', data);
         this.setState({
           sender: data
-        }).bind(this);
-      },
+        })
+      }.bind(this),
       error: function(error) {
         console.error('failed to get name', error);
       },
@@ -57,28 +76,45 @@ export default class ChatBox extends React.Component {
     });
   }
 
+  
+
   sendTranscript(){
+    console.log('SENDING TO_____', this.props.calledUser)
+    console.log('SENDING FROM_____', this.props.userId)
     console.log('THIS---', this.state.sender);
+   if(this.props.calledUser === null){
+      var interviewee = this.state.receiver
+      this.setState({
+      transcriptPart: this.state.sender + ': ' + this.state.transcript
+    })
+      this.setState({ 
+      transcript: this.state.transcript.concat([this.state.transcriptPart])
+    })
+    sendMessage(this.props.userId, interviewee, this.state.transcriptPart);
+      this.setState({
+        transcriptPart: ''
+      })
+   } else {
     this.setState({
       transcriptPart: this.state.sender + ': ' + this.state.transcript
     })
-    //console.log("HHHHHHEEEEEYYYYY", this.state.transcriptPart)
     this.setState({ 
         transcript: this.state.transcript.concat([this.state.transcriptPart])
     })
-    console.log("HHHHHHEEEEEYYYYY", this.state.calledUser)
-    sendMessage(this.props.userId, this.props.calledUser, this.state.transcript);
+    sendMessage(this.props.userId, this.props.calledUser, this.state.transcriptPart);
     this.setState({
       transcriptPart: ''
     })
-    console.log('SENDER AFTER  ', this.state.sender);
+   }
+    console.log('___________  ', this.state.transcript);
   }
 
 
   saveTranscript(){
+    console.log('hey');
     console.log('---------------', this.props.currentSession)
     var formattedTran = this.state.transcript.join('+');
-    console.log(formattedTran);
+    console.log('------------',formattedTran);
     $.ajax({
       method:'POST',
       url: '/transcript',
@@ -101,11 +137,9 @@ export default class ChatBox extends React.Component {
     return (
       <div className="record-questions pure-u-1-1">
         <div className="chatbox">
-          <ul className="chatboxlist">
             {this.state.transcript.map(function(mes){
-              return <li className="chatboxlist"> {mes} </li>; 
+              return <div className="chatboxlist"> {mes} </div>; 
             })}
-          </ul>
         </div>
         <div className="button-bar">        
             <input onChange={this.onTranscriptChange.bind(this)}
@@ -115,7 +149,9 @@ export default class ChatBox extends React.Component {
         </div>
         <div className="button-bar">
           <button className="stop-button pure-button pure-button-error" 
-          onClick={(e) => {this.saveTranscript; 
+          onClick={(e) => {
+            console.log(this);
+            this.saveTranscript.bind(this); 
             this.props.clicked(e)}}>Stop</button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 var Session = require('../models/SessionModel.js');
 var moment = require('moment');
 var fs = require('fs');
+var User = require('./../models/UserModel.js');
 
 module.exports = {
   createSession: function(req, res) {
@@ -113,9 +114,28 @@ module.exports = {
     })
   },
 
+  getInterviewee : function(req, res) {
+    var parsedUrl = req.url.split('/');
+    var queryObj = {
+      id: parsedUrl[parsedUrl.length - 1]
+    }
+    Session.where(queryObj).fetch()
+    .then(function(session) {
+      User.where({ id: session.attributes.interviewerId }).fetch()
+      .then(function(user) {
+        console.log
+        res.send(201, user.attributes.id)
+      })
+      .catch(function(err) {
+        console.error(err);
+    })
+    })
+  },
+
   sessionNotes: function(req, res) {
     console.log(req.body);
     var notes = req.body.notes;
+    console.log(notes);
     var session = req.body.session;
     fs.writeFile(__dirname + "/../notes/" + session, notes, function(err) {
       if(err) {
@@ -129,10 +149,12 @@ module.exports = {
   loadSessionNotes: function(req, res) {
     var parsedUrl = req.url.split('/');
     var endPoint = parsedUrl[parsedUrl.length - 1];
-    fs.readFile(__dirname + '/../notes/' + endPoint, 'utf8', function(err, data){
+    console.log('_______-______-',  + endPoint);
+    fs.readFile(__dirname + "/../notes/" + endPoint, 'utf8', function(err, data){
       if(err) {
         return console.error(err);
       }
+      console.log('WOWOWOWOW',data)
       res.status(201).send(data)
     })
   },
