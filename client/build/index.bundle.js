@@ -1743,7 +1743,7 @@ var ChartComponent = function (_React$Component) {
           null,
           _react2.default.createElement(
             'span',
-            null,
+            { className: 'view-btn' },
             _react2.default.createElement(
               'button',
               { onClick: this.toggleTranscriptView.bind(this) },
@@ -1752,7 +1752,7 @@ var ChartComponent = function (_React$Component) {
           ),
           _react2.default.createElement(
             'span',
-            null,
+            { className: 'view-btn' },
             _react2.default.createElement(
               'button',
               { onClick: this.toggleNotesView.bind(this) },

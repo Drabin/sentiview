@@ -44,6 +44,9 @@ video#webcam {
 li {
   text-align: left;
 }
+.view-btn {
+  margin: 2px;
+}
 
 .chatbox {
   height:300px;
