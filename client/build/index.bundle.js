@@ -636,7 +636,7 @@ var ChatBox = function (_React$Component) {
         this.setState({
           transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
         }, function () {
-          (0, _Sockets.sendMessage)(this.props.userId, interviewee, this.state.transcriptPart);
+          (0, _Sockets.sendMessage)(this.props.userId, interviewee, this.state.sender + ': ' + this.state.transcriptPart);
           this.setState({
             transcriptPart: ''
           });
@@ -645,7 +645,7 @@ var ChatBox = function (_React$Component) {
         this.setState({
           transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
         }, function () {
-          (0, _Sockets.sendMessage)(this.props.userId, this.props.calledUser, this.state.transcriptPart);
+          (0, _Sockets.sendMessage)(this.props.userId, this.props.calledUser, this.state.sender + ': ' + this.state.transcriptPart);
           this.setState({
             transcriptPart: ''
           });

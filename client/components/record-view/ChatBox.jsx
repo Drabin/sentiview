@@ -86,7 +86,7 @@ export default class ChatBox extends React.Component {
       this.setState({ 
       transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
     }, function(){      
-    sendMessage(this.props.userId, interviewee, this.state.transcriptPart);
+    sendMessage(this.props.userId, interviewee, this.state.sender + ': ' + this.state.transcriptPart);
       this.setState({
         transcriptPart: ''
       })
@@ -95,7 +95,7 @@ export default class ChatBox extends React.Component {
     this.setState({ 
         transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
     }, function(){
-      sendMessage(this.props.userId, this.props.calledUser, this.state.transcriptPart);
+      sendMessage(this.props.userId, this.props.calledUser, this.state.sender + ': ' + this.state.transcriptPart);
       this.setState({
         transcriptPart: ''
       })      
