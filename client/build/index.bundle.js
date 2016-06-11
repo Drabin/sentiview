@@ -1966,7 +1966,7 @@ var SessionTranscript = function (_React$Component) {
 				_react2.default.createElement(
 					'span',
 					{ className: 'notes-area' },
-					_react2.default.createElement('textarea', { rows: '30', cols: '100',
+					_react2.default.createElement('textarea', { ref: 'note', rows: '30', cols: '100',
 						value: this.state.notes,
 						onChange: this.onNotesChange.bind(this) })
 				),
