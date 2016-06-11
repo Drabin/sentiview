@@ -66,7 +66,6 @@ export default class ChatBox extends React.Component {
       error: function(error) {
         console.error('failed to get name', error);
       },
-      dataType: 'json'
     });
   }
  
@@ -75,7 +74,13 @@ export default class ChatBox extends React.Component {
       transcriptPart: e.target.value
     });
   }
-
+  onEnterPress(e){
+    console.log(e.keyCode)
+    if (e.keyCode == 13) {
+        console.log('TRUE')
+        this.sendTranscript().bind(this);
+      }
+  }
   
 
   sendTranscript(){
@@ -84,34 +89,28 @@ export default class ChatBox extends React.Component {
     console.log('THIS---', this.state.sender);
    if(this.props.calledUser === null){
       var interviewee = this.state.receiver
-      this.setState({
-      transcriptPart: this.state.sender + ': ' + this.state.transcript
-    })
       this.setState({ 
-      transcript: this.state.transcript.concat([this.state.transcriptPart])
-    })
-    sendMessage(this.props.userId, interviewee, this.state.transcriptPart);
+      transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
+    }, function(){      
+    sendMessage(this.props.userId, interviewee, this.state.sender + ': ' + this.state.transcriptPart);
       this.setState({
         transcriptPart: ''
       })
+    }.bind(this))
    } else {
-    this.setState({
-      transcriptPart: this.state.sender + ': ' + this.state.transcript
-    })
     this.setState({ 
-        transcript: this.state.transcript.concat([this.state.transcriptPart])
-    })
-    sendMessage(this.props.userId, this.props.calledUser, this.state.transcriptPart);
-    this.setState({
-      transcriptPart: ''
+        transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
+    }, function(){
+      sendMessage(this.props.userId, this.props.calledUser, this.state.sender + ': ' + this.state.transcriptPart);
+      this.setState({
+        transcriptPart: ''
+      })      
     })
    }
-    console.log('___________  ', this.state.transcript);
   }
 
 
   saveTranscript(){
-    console.log('hey');
     console.log('---------------', this.props.currentSession)
     var formattedTran = this.state.transcript.join('+');
     console.log('------------',formattedTran);
@@ -142,10 +141,14 @@ export default class ChatBox extends React.Component {
             })}
         </div>
         <div className="button-bar">        
-            <input onChange={this.onTranscriptChange.bind(this)}
+          <div>
+            <input className="mesinput"
+            onKeyDown={this.onEnterPress.bind(this)}
+            onChange={this.onTranscriptChange.bind(this)}
              type="text" value={this.state.transcriptPart}> 
             </input>
-            <button onClick={this.sendTranscript.bind(this)} >send</button>
+          </div>  
+            <button className="sendbtn" onClick={this.sendTranscript.bind(this)} >send</button>
         </div>
         <div className="button-bar">
           <button className="stop-button pure-button pure-button-error" 

@@ -33,6 +33,7 @@ video#webcam {
 #callerwebcam {
   z-index: 1000;
   margin-left: -12.5%;
+  margin-right: -12.5%;
 }
 
 .pure-button-error {
@@ -46,7 +47,8 @@ li {
 
 .chatbox {
   height:300px;
-  width: 100%;
+  width: 90%;
+  margin-right: 5%;
   background-color: white;
   overflow: break-word;
   padding: none;
@@ -56,14 +58,28 @@ li {
   list-style-type:none;
   margin-left:none;
 }
+
 .emailheader{
   position: absolute;
   left:43%;
 }
+
 .emailfeild {
   position: absolute;
   left:43%;
+}
 
+.mesinput{
+  width: 89%;
+  margin-right: 10%;
+}
+
+.stop-button {
+  margin-right: 10%
+}
+
+.sendbtn {
+  margin-right: 10%
 }
 
 
