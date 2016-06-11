@@ -17,6 +17,7 @@ export default class Emailform extends React.Component {
     })
   } 
   onReceiverChange(e){
+    console.log(this.state.receiver)
     this.setState({
       receiver: e.target.value
     })
@@ -71,14 +72,14 @@ export default class Emailform extends React.Component {
                   <label for="subject"></label>
                   <input id="subject" type="text" className="emailfeild"
                   placeholder="subject"
-                  onChange={this.onReceiverChange.bind(this)}
-                  value={ this.state.receiver }></input>
+                  onChange={this.onSubjectChange.bind(this)}
+                  value={ this.state.sub }></input>
               </div>
               <div className="pure-control-group">
                   <input id="email" type="email" className="emailfeild"
                   placeholder="email to"
-                  onChange={this.onSubjectChange.bind(this)}
-                  value={this.state.sub}></input>
+                  onChange={this.onReceiverChange.bind(this)}
+                  value={ this.state.receiver }></input>
               </div>
             </fieldset>
             <button className="emailbutn" type='button' onClick={this.emailNotes.bind(this)} className="sendmailbtn">Send</button>
@@ -91,16 +92,3 @@ export default class Emailform extends React.Component {
 
 }
 
-
-
-
-
-
-
-            //   <input type="text"  name='Subject'          
-            //   onChange={this.onSubjectChange.bind(this)}
-            //   value={this.state.sub} placeholder="Subject"></input>
-            //   <input type="email"  name='To'
-            //   onChange={this.onReceiverChange.bind(this)}
-            //   value={this.state.receiver} placeholder="Email"></input>
-            // </fieldset>

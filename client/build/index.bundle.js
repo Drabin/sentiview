@@ -1274,6 +1274,7 @@ var Emailform = function (_React$Component) {
   }, {
     key: 'onReceiverChange',
     value: function onReceiverChange(e) {
+      console.log(this.state.receiver);
       this.setState({
         receiver: e.target.value
       });
@@ -1342,16 +1343,16 @@ var Emailform = function (_React$Component) {
               _react2.default.createElement('label', { 'for': 'subject' }),
               _react2.default.createElement('input', { id: 'subject', type: 'text', className: 'emailfeild',
                 placeholder: 'subject',
-                onChange: this.onReceiverChange.bind(this),
-                value: this.state.receiver })
+                onChange: this.onSubjectChange.bind(this),
+                value: this.state.sub })
             ),
             _react2.default.createElement(
               'div',
               { className: 'pure-control-group' },
               _react2.default.createElement('input', { id: 'email', type: 'email', className: 'emailfeild',
                 placeholder: 'email to',
-                onChange: this.onSubjectChange.bind(this),
-                value: this.state.sub })
+                onChange: this.onReceiverChange.bind(this),
+                value: this.state.receiver })
             )
           ),
           _react2.default.createElement(
@@ -1371,15 +1372,6 @@ var Emailform = function (_React$Component) {
 
   return Emailform;
 }(_react2.default.Component);
-
-//   <input type="text"  name='Subject'         
-//   onChange={this.onSubjectChange.bind(this)}
-//   value={this.state.sub} placeholder="Subject"></input>
-//   <input type="email"  name='To'
-//   onChange={this.onReceiverChange.bind(this)}
-//   value={this.state.receiver} placeholder="Email"></input>
-// </fieldset>
-
 
 exports.default = Emailform;
 
