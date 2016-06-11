@@ -30,7 +30,7 @@ module.exports = {
         });
       return;
     }
-    var search = { start: event.start, end: event.end, title: event.title, user };
+    var search = { start: event.start, end: event.end, title: event.title, user: user };
     if (event.id) search.id = event.id;
     new Calendar(search)
       .save()
