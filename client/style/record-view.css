@@ -81,6 +81,13 @@ li {
 .sendbtn {
   margin-right: 10%
 }
+.conformationmsg{
+ font-style: italic;
+ color: green;
+ position: relative;
+ margin: none;
+}
+
 
 
 

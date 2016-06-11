@@ -1850,6 +1850,7 @@ var SessionTranscript = function (_React$Component) {
 			currentUserId: null,
 			showEmailForm: false,
 			showSavedNotes: false,
+			showConfirmMes: false,
 			notes: ''
 		};
 		_this.getSavedNotes = _this.getSavedNotes.bind(_this);
@@ -1867,6 +1868,22 @@ var SessionTranscript = function (_React$Component) {
 			this.setState({
 				notes: e.target.value
 			});
+		}
+	}, {
+		key: 'displayConfirm',
+		value: function displayConfirm() {
+			console.log('in here');
+			this.setState({
+				showConfirmMes: true
+			}, function () {
+				console.log('in the next one');
+				setTimeout(function () {
+					console.log('in the last one');
+					this.setState({
+						showConfirmMes: false
+					});
+				}.bind(this), 2000);
+			}.bind(this));
 		}
 	}, {
 		key: 'getSavedNotes',
@@ -1897,13 +1914,13 @@ var SessionTranscript = function (_React$Component) {
 					session: sessionId[sessionId.length - 1],
 					notes: notes
 				},
-				success: function success() {
+				success: function (data) {
 					console.log('posted notes');
-				},
+					this.displayConfirm();
+				}.bind(this),
 				error: function error(_error2) {
 					console.error('posting notes error', _error2);
-				},
-				dataType: 'json'
+				}
 			});
 		}
 	}, {
@@ -1925,9 +1942,18 @@ var SessionTranscript = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement('textarea', { rows: '30', cols: '100',
-					value: this.state.notes,
-					onChange: this.onNotesChange.bind(this) }),
+				_react2.default.createElement(
+					'span',
+					{ className: 'notes-area' },
+					_react2.default.createElement('textarea', { rows: '30', cols: '100',
+						value: this.state.notes,
+						onChange: this.onNotesChange.bind(this) })
+				),
+				this.state.showConfirmMes ? _react2.default.createElement(
+					'div',
+					{ className: 'conformationmsg' },
+					'Notes saved'
+				) : null,
 				_react2.default.createElement(
 					'div',
 					null,
