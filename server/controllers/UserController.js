@@ -56,6 +56,7 @@ exports.updatePeerId = function(req, res) {
   User.where({ id: req.body.id }).fetch()
     .then(function(user) {
       user.set({ peerId: req.body.peerId }).save();
+      console.log(user);
       res.status(200).send(user);
     })
     .catch(function(err) {

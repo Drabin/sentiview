@@ -10,7 +10,7 @@
 
 .nav-bar {
   height: 100px;
-  background-color: #000000;
+  background-color: #30343F;
   border-bottom: 4px solid;
 }
 
@@ -50,6 +50,10 @@
 .pure-menu-link:hover {
   color: #2d3e50;
   background-color: rgb(200, 220, 235);
+}
+
+.pure-menu-children {
+  z-index: 1000;
 }
 
 .nav-bar-dropdown {

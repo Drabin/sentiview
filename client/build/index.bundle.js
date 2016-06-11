@@ -631,7 +631,22 @@ var HomeView = function (_React$Component) {
         _react2.default.createElement(
           'h4',
           { className: 'home-view-welcome' },
-          'Welcome to sentimize.'
+          'Welcome to sentiview.'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'home-view-instruction' },
+          'To view your calendar, click on ',
+          _react2.default.createElement(
+            'span',
+            { className: 'instruction-highlight' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { to: '/calendar' },
+              'Calendar'
+            )
+          ),
+          '.'
         ),
         _react2.default.createElement(
           'div',
@@ -730,22 +745,22 @@ var Footer = function (_React$Component) {
         { className: 'footer' },
         _react2.default.createElement(
           'a',
-          { href: 'https://github.com/chkakaja/sentimize/blob/master/README.md', className: 'footer-link' },
+          { href: 'https://github.com/crypticzoologists/sentiview/blob/master/README.md', className: 'footer-link' },
           'About'
         ),
         _react2.default.createElement(
           'a',
-          { href: 'https://github.com/chkakaja/sentimize', target: '_blank', className: 'footer-link' },
+          { href: 'https://github.com/crypticzoologists/sentiview', target: '_blank', className: 'footer-link' },
           'Github'
         ),
         _react2.default.createElement(
           'a',
-          { href: 'https://github.com/chkakaja/sentimize/blob/master/LICENSE', target: '_blank', className: 'footer-link' },
+          { href: 'https://github.com/crypticzoologists/sentiview/blob/master/LICENSE', target: '_blank', className: 'footer-link' },
           'License'
         ),
         _react2.default.createElement(
           'a',
-          { href: 'https://github.com/chkakaja/sentimize/blob/master/CONTRIBUTING.md', target: '_blank', className: 'footer-link' },
+          { href: 'https://github.com/crypticzoologists/sentiview/blob/master/CONTRIBUTING.md', target: '_blank', className: 'footer-link' },
           'Contribute'
         )
       );
@@ -865,7 +880,7 @@ var NavBar = function (_React$Component) {
           _react2.default.createElement(
             _reactRouter.Link,
             { className: 'home-link', to: '/' },
-            'Sentimize'
+            'Sentiview'
           )
         ),
         _react2.default.createElement(

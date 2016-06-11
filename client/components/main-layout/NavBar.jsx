@@ -7,7 +7,7 @@ export default class NavBar extends React.Component {
     return (
       <div className="nav-bar">
         <div className="pure-menu-heading">
-          <Link className="home-link" to="/">Sentimize</Link>
+          <Link className="home-link" to="/">Sentiview</Link>
         </div>
 
         <div className="pure-menu pure-menu-horizontal pure-menu-fixed">
