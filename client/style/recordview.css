@@ -31,3 +31,8 @@ video#webcam {
     background: rgb(202, 60, 60);
     color: white;
 }
+.chatbox {
+	background-color: white;
+	overflow: normal;
+	list-style-type:none
+}

@@ -44,7 +44,27 @@ li {
   text-align: left;
 }
 
-.chatbox{
+.chatbox {
+  height:300px;
+  width: 100%;
+  background-color: white;
   overflow: break-word;
-  list-style-type:none
+  padding: none;
 }
+.chatboxlist {
+  text-align: left;
+  list-style-type:none;
+  margin-left:none;
+}
+.emailheader{
+  position: absolute;
+  left:43%;
+}
+.emailfeild {
+  position: absolute;
+  left:43%;
+
+}
+
+
+

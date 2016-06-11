@@ -1,13 +1,14 @@
 var UserController = require('./../controllers/UserController.js');
 var SessionController = require('./../controllers/SessionController.js');
 var SnapshotController = require('./../controllers/SnapshotController.js');
-
+var emailController = require('./../controllers/emailController.js');
 module.exports = function(app) {
   // See auth-routes for POST to /api/users
   app.get('/api/users', UserController.getCurrentUser);
   app.put('/api/users', UserController.updateUser);
   app.get('/api/users/getCalledUser', UserController.getCalledUser);
   app.post('/api/users/updatePeerId', UserController.updatePeerId);
+  app.get('/usernames', UserController.getUserNames);
 
   app.get('/api/session/interviewer',  SessionController.getInterviewerSessions);
   app.get('/api/session/interviewee',  SessionController.getIntervieweeSessions);
@@ -17,7 +18,11 @@ module.exports = function(app) {
   app.post('/transcript', SessionController.sessionTranscript);
   app.get('/transcript/*', SessionController.loadSessionTranscript);
   app.post('/notes', SessionController.sessionNotes);
-
+  app.get('/notes/*', SessionController.loadSessionNotes);
+  app.get('/interviewer/*', SessionController.getInterviewee);
+  
   app.get('/api/snapshot', SnapshotController.getSnapshots);
   app.post('/api/snapshot', SnapshotController.createSnapshot);
+
+  app.post('/emailnotes', emailController.sendEmail);
 };
