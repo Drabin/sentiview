@@ -52,6 +52,7 @@ li {
   background-color: white;
   overflow: break-word;
   padding: none;
+  overflow: scroll
 }
 .chatboxlist {
   text-align: left;

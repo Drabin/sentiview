@@ -7,6 +7,8 @@ export default class Emailform extends React.Component {
     this.state = {
       sub: '',
       receiver: '',
+      showConfirmMes: false
+
     }
   }
   onSubjectChange(e){
@@ -20,6 +22,20 @@ export default class Emailform extends React.Component {
     })
   }  
 
+  displayConfirm(){
+    console.log('in here')
+    this.setState({
+      showConfirmMes: true
+    }, function(){
+      console.log('in the next one')
+      setTimeout(function(){
+      console.log('in the last one')
+        this.setState({
+          showConfirmMes: false 
+        })
+      }.bind(this),2000)
+    }.bind(this))
+  }
 
   emailNotes() {
     var sessionId = this.props.session;
@@ -37,11 +53,11 @@ export default class Emailform extends React.Component {
           },
           success: function() {
             console.log('Email sent');
-          },
+            this.displayConfirm();
+          }.bind(this),
           error: function(error) {
             console.error('Email failed', error);
           },
-          dataType: 'json'
       });   
   }
 
@@ -67,6 +83,7 @@ export default class Emailform extends React.Component {
             </fieldset>
             <button className="emailbutn" type='button' onClick={this.emailNotes.bind(this)} className="sendmailbtn">Send</button>
           </form>
+          { this.state.showConfirmMes ? <div className="conformationmsg">Sent</div> : null }
       </div>
     )
   }

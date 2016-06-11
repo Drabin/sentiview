@@ -573,6 +573,12 @@ var ChatBox = function (_React$Component) {
       this.getUserNames();
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var node = _reactDom2.default.findDOMNode(this.refs.chat);
+      node.scrollTop = node.scrollHeight;
+    }
+  }, {
     key: 'getMessage',
     value: function getMessage(message) {
       this.setState({
@@ -693,7 +699,7 @@ var ChatBox = function (_React$Component) {
         { className: 'record-questions pure-u-1-1' },
         _react2.default.createElement(
           'div',
-          { className: 'chatbox' },
+          { ref: 'chat', className: 'chatbox' },
           this.state.transcript.map(function (mes) {
             return _react2.default.createElement(
               'div',
@@ -1251,7 +1257,9 @@ var Emailform = function (_React$Component) {
 
     _this.state = {
       sub: '',
-      receiver: ''
+      receiver: '',
+      showConfirmMes: false
+
     };
     return _this;
   }
@@ -1271,6 +1279,22 @@ var Emailform = function (_React$Component) {
       });
     }
   }, {
+    key: 'displayConfirm',
+    value: function displayConfirm() {
+      console.log('in here');
+      this.setState({
+        showConfirmMes: true
+      }, function () {
+        console.log('in the next one');
+        setTimeout(function () {
+          console.log('in the last one');
+          this.setState({
+            showConfirmMes: false
+          });
+        }.bind(this), 2000);
+      }.bind(this));
+    }
+  }, {
     key: 'emailNotes',
     value: function emailNotes() {
       var sessionId = this.props.session;
@@ -1286,13 +1310,13 @@ var Emailform = function (_React$Component) {
           sub: sub,
           receiver: receiver
         },
-        success: function success() {
+        success: function () {
           console.log('Email sent');
-        },
+          this.displayConfirm();
+        }.bind(this),
         error: function error(_error) {
           console.error('Email failed', _error);
-        },
-        dataType: 'json'
+        }
       });
     }
   }, {
@@ -1335,7 +1359,12 @@ var Emailform = function (_React$Component) {
             _defineProperty({ className: 'emailbutn', type: 'button', onClick: this.emailNotes.bind(this) }, 'className', 'sendmailbtn'),
             'Send'
           )
-        )
+        ),
+        this.state.showConfirmMes ? _react2.default.createElement(
+          'div',
+          { className: 'conformationmsg' },
+          'Sent'
+        ) : null
       );
     }
   }]);
