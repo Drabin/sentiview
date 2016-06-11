@@ -24,8 +24,14 @@ export default class ChatBox extends React.Component {
       join(this.props.userId);
       this.getInterviewee()
       this.getUserNames();
+  }
 
-  };
+  componentDidUpdate() {
+    var node = ReactDom.findDOMNode(this.refs.chat);
+    node.scrollTop = node.scrollHeight;
+  }    
+
+
   getMessage(message){
       this.setState({
       transcript: this.state.transcript.concat([message])
@@ -135,7 +141,7 @@ export default class ChatBox extends React.Component {
   render(){
     return (
       <div className="record-questions pure-u-1-1">
-        <div className="chatbox">
+        <div ref="chat" className="chatbox">
             {this.state.transcript.map(function(mes){
               return <div className="chatboxlist"> {mes} </div>; 
             })}

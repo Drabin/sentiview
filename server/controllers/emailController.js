@@ -16,6 +16,7 @@ exports.sendEmail = function(req, res) {
     	User.where({ id: session.attributes.interviewerId }).fetch()
     	.then(function(user){
       console.log('USER------', user.attributes);
+			 res.send(200, "Sent email")
 			 transporter.sendMail({
 			          from: user.attributes.email,
 			          to: req.body.receiver,

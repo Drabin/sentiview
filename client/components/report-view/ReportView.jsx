@@ -146,8 +146,8 @@ export default class ChartComponent extends React.Component {
     return (
       <div>
         <div>
-          <span><button onClick={this.toggleTranscriptView.bind(this)} >Transcript</button></span>
-          <span><button onClick={this.toggleNotesView.bind(this)}>Notes</button></span>
+          <span className="view-btn"><button onClick={this.toggleTranscriptView.bind(this)} >Transcript</button></span>
+          <span className="view-btn"><button onClick={this.toggleNotesView.bind(this)}>Notes</button></span>
         </div>
         <div>
           { this.state.showTranscript ?  

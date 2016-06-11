@@ -7,6 +7,8 @@ export default class Emailform extends React.Component {
     this.state = {
       sub: '',
       receiver: '',
+      showConfirmMes: false
+
     }
   }
   onSubjectChange(e){
@@ -15,11 +17,26 @@ export default class Emailform extends React.Component {
     })
   } 
   onReceiverChange(e){
+    console.log(this.state.receiver)
     this.setState({
       receiver: e.target.value
     })
   }  
 
+  displayConfirm(){
+    console.log('in here')
+    this.setState({
+      showConfirmMes: true
+    }, function(){
+      console.log('in the next one')
+      setTimeout(function(){
+      console.log('in the last one')
+        this.setState({
+          showConfirmMes: false 
+        })
+      }.bind(this),2000)
+    }.bind(this))
+  }
 
   emailNotes() {
     var sessionId = this.props.session;
@@ -37,11 +54,11 @@ export default class Emailform extends React.Component {
           },
           success: function() {
             console.log('Email sent');
-          },
+            this.displayConfirm();
+          }.bind(this),
           error: function(error) {
             console.error('Email failed', error);
           },
-          dataType: 'json'
       });   
   }
 
@@ -55,18 +72,19 @@ export default class Emailform extends React.Component {
                   <label for="subject"></label>
                   <input id="subject" type="text" className="emailfeild"
                   placeholder="subject"
-                  onChange={this.onReceiverChange.bind(this)}
-                  value={ this.state.receiver }></input>
+                  onChange={this.onSubjectChange.bind(this)}
+                  value={ this.state.sub }></input>
               </div>
               <div className="pure-control-group">
                   <input id="email" type="email" className="emailfeild"
                   placeholder="email to"
-                  onChange={this.onSubjectChange.bind(this)}
-                  value={this.state.sub}></input>
+                  onChange={this.onReceiverChange.bind(this)}
+                  value={ this.state.receiver }></input>
               </div>
             </fieldset>
             <button className="emailbutn" type='button' onClick={this.emailNotes.bind(this)} className="sendmailbtn">Send</button>
           </form>
+          { this.state.showConfirmMes ? <div className="conformationmsg">Sent</div> : null }
       </div>
     )
   }
@@ -74,16 +92,3 @@ export default class Emailform extends React.Component {
 
 }
 
-
-
-
-
-
-
-            //   <input type="text"  name='Subject'          
-            //   onChange={this.onSubjectChange.bind(this)}
-            //   value={this.state.sub} placeholder="Subject"></input>
-            //   <input type="email"  name='To'
-            //   onChange={this.onReceiverChange.bind(this)}
-            //   value={this.state.receiver} placeholder="Email"></input>
-            // </fieldset>

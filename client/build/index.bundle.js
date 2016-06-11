@@ -1028,6 +1028,12 @@ var ChatBox = function (_React$Component) {
       this.getUserNames();
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var node = _reactDom2.default.findDOMNode(this.refs.chat);
+      node.scrollTop = node.scrollHeight;
+    }
+  }, {
     key: 'getMessage',
     value: function getMessage(message) {
       this.setState({
@@ -1148,7 +1154,7 @@ var ChatBox = function (_React$Component) {
         { className: 'record-questions pure-u-1-1' },
         _react2.default.createElement(
           'div',
-          { className: 'chatbox' },
+          { ref: 'chat', className: 'chatbox' },
           this.state.transcript.map(function (mes) {
             return _react2.default.createElement(
               'div',
@@ -1706,7 +1712,9 @@ var Emailform = function (_React$Component) {
 
     _this.state = {
       sub: '',
-      receiver: ''
+      receiver: '',
+      showConfirmMes: false
+
     };
     return _this;
   }
@@ -1721,9 +1729,26 @@ var Emailform = function (_React$Component) {
   }, {
     key: 'onReceiverChange',
     value: function onReceiverChange(e) {
+      console.log(this.state.receiver);
       this.setState({
         receiver: e.target.value
       });
+    }
+  }, {
+    key: 'displayConfirm',
+    value: function displayConfirm() {
+      console.log('in here');
+      this.setState({
+        showConfirmMes: true
+      }, function () {
+        console.log('in the next one');
+        setTimeout(function () {
+          console.log('in the last one');
+          this.setState({
+            showConfirmMes: false
+          });
+        }.bind(this), 2000);
+      }.bind(this));
     }
   }, {
     key: 'emailNotes',
@@ -1741,13 +1766,13 @@ var Emailform = function (_React$Component) {
           sub: sub,
           receiver: receiver
         },
-        success: function success() {
+        success: function () {
           console.log('Email sent');
-        },
+          this.displayConfirm();
+        }.bind(this),
         error: function error(_error) {
           console.error('Email failed', _error);
-        },
-        dataType: 'json'
+        }
       });
     }
   }, {
@@ -1773,16 +1798,16 @@ var Emailform = function (_React$Component) {
               _react2.default.createElement('label', { 'for': 'subject' }),
               _react2.default.createElement('input', { id: 'subject', type: 'text', className: 'emailfeild',
                 placeholder: 'subject',
-                onChange: this.onReceiverChange.bind(this),
-                value: this.state.receiver })
+                onChange: this.onSubjectChange.bind(this),
+                value: this.state.sub })
             ),
             _react2.default.createElement(
               'div',
               { className: 'pure-control-group' },
               _react2.default.createElement('input', { id: 'email', type: 'email', className: 'emailfeild',
                 placeholder: 'email to',
-                onChange: this.onSubjectChange.bind(this),
-                value: this.state.sub })
+                onChange: this.onReceiverChange.bind(this),
+                value: this.state.receiver })
             )
           ),
           _react2.default.createElement(
@@ -1790,22 +1815,18 @@ var Emailform = function (_React$Component) {
             _defineProperty({ className: 'emailbutn', type: 'button', onClick: this.emailNotes.bind(this) }, 'className', 'sendmailbtn'),
             'Send'
           )
-        )
+        ),
+        this.state.showConfirmMes ? _react2.default.createElement(
+          'div',
+          { className: 'conformationmsg' },
+          'Sent'
+        ) : null
       );
     }
   }]);
 
   return Emailform;
 }(_react2.default.Component);
-
-//   <input type="text"  name='Subject'         
-//   onChange={this.onSubjectChange.bind(this)}
-//   value={this.state.sub} placeholder="Subject"></input>
-//   <input type="email"  name='To'
-//   onChange={this.onReceiverChange.bind(this)}
-//   value={this.state.receiver} placeholder="Email"></input>
-// </fieldset>
-
 
 exports.default = Emailform;
 
@@ -2177,7 +2198,7 @@ var ChartComponent = function (_React$Component) {
           null,
           _react2.default.createElement(
             'span',
-            null,
+            { className: 'view-btn' },
             _react2.default.createElement(
               'button',
               { onClick: this.toggleTranscriptView.bind(this) },
@@ -2186,7 +2207,7 @@ var ChartComponent = function (_React$Component) {
           ),
           _react2.default.createElement(
             'span',
-            null,
+            { className: 'view-btn' },
             _react2.default.createElement(
               'button',
               { onClick: this.toggleNotesView.bind(this) },
