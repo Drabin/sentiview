@@ -64,14 +64,13 @@ module.exports = {
   },
 
   calledGenerateSession: function(req, res) {
-    // something wrong here
     Session.where({ intervieweeId: req.query.id }).fetchAll()
       .then(function(intervieweeSessions) {
         Session.where({ interviewerId: req.query.id }).fetchAll()
           .then(function(interviewerSessions) {
-            // FIND A WAY TO GET THIS DONE
-            var lastInterviewerSession = interviewerSessions._byId[Object.keys(interviewerSessions._byId)[(Object.keys(interviewerSessions._byId).length) / 2 - 1]];
-            var lastIntervieweeSession = intervieweeSessions._byId[Object.keys(intervieweeSessions._byId)[(Object.keys(intervieweeSessions._byId).length) / 2 - 1]];
+            var blank = { attributes: { id: 0 } }
+            var lastInterviewerSession = interviewerSessions._byId[Object.keys(interviewerSessions._byId)[(Object.keys(interviewerSessions._byId).length) / 2 - 1]] || blank;
+            var lastIntervieweeSession = intervieweeSessions._byId[Object.keys(intervieweeSessions._byId)[(Object.keys(intervieweeSessions._byId).length) / 2 - 1]] || blank;
             console.log('INTERVIEWER', lastInterviewerSession);
             console.log('interviewee', lastIntervieweeSession);
             if (lastInterviewerSession.attributes.id > lastIntervieweeSession.attributes.id) {
