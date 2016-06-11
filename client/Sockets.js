@@ -9,8 +9,8 @@ var join = function(userId) {
 var sendMessage = function(sender, receiver, text) {
   var msg = {
     message: text,
-    sender,
-    receiver
+    sender: sender,
+    receiver: receiver
   };
   console.log()
   socket.emit('message', msg);

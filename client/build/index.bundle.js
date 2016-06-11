@@ -720,7 +720,6 @@ var ChatBox = function (_React$Component) {
             'button',
             { className: 'stop-button pure-button pure-button-error',
               onClick: function onClick(e) {
-                console.log(_this2);
                 _this2.saveTranscript.bind(_this2);
                 _this2.props.clicked(e);
               } },
@@ -1377,7 +1376,6 @@ var SessionTranscript = function (_React$Component) {
 	_createClass(SessionTranscript, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-
 			this.getSavedNotes();
 		}
 	}, {
@@ -1765,12 +1763,24 @@ var SessionTranscript = function (_React$Component) {
 		_this.state = {
 			transcriptArray: null
 		};
+
 		return _this;
 	}
 
 	_createClass(SessionTranscript, [{
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			console.log('hello');
+			this.getTranscript(function (data) {
+				this.setState({
+					transcriptArray: data.transcript
+				});
+			});
+			console.log(this.state.currentUser);
+		}
+	}, {
+		key: 'getTranscript',
+		value: function getTranscript(callback) {
 			var sessionId = (0, _jquery2.default)(location).attr('href').split('/');
 			_jquery2.default.ajax({
 				methond: 'GET',
@@ -1790,15 +1800,7 @@ var SessionTranscript = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(
-					'ul',
-					null,
-					_react2.default.createElement(
-						'li',
-						null,
-						'hello'
-					)
-				)
+				'hello'
 			);
 		}
 	}]);

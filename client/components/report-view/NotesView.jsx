@@ -15,8 +15,7 @@ export default class SessionTranscript extends React.Component {
 	}
 
 	componentDidMount() {     	
-      
-      this.getSavedNotes();
+        this.getSavedNotes();
     }
 
 	onNotesChange(e){
