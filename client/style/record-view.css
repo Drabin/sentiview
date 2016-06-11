@@ -30,7 +30,7 @@ video#webcam {
   margin-right: 10px;
 }*/
 
-#receiverwebcam {
+#callerwebcam {
   z-index: 1000;
   margin-left: -12.5%;
 }
