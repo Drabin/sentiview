@@ -626,6 +626,15 @@ var ChatBox = function (_React$Component) {
       });
     }
   }, {
+    key: 'onEnterPress',
+    value: function onEnterPress(e) {
+      console.log(e.keyCode);
+      if (e.keyCode == 13) {
+        console.log('TRUE');
+        this.sendTranscript().bind(this);
+      }
+    }
+  }, {
     key: 'sendTranscript',
     value: function sendTranscript() {
       console.log('SENDING TO_____', this.props.calledUser);
@@ -702,6 +711,7 @@ var ChatBox = function (_React$Component) {
             'div',
             null,
             _react2.default.createElement('input', { className: 'mesinput',
+              onKeyDown: this.onEnterPress.bind(this),
               onChange: this.onTranscriptChange.bind(this),
               type: 'text', value: this.state.transcriptPart })
           ),

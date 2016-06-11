@@ -74,7 +74,13 @@ export default class ChatBox extends React.Component {
       transcriptPart: e.target.value
     });
   }
-
+  onEnterPress(e){
+    console.log(e.keyCode)
+    if (e.keyCode == 13) {
+        console.log('TRUE')
+        this.sendTranscript().bind(this);
+      }
+  }
   
 
   sendTranscript(){
@@ -137,6 +143,7 @@ export default class ChatBox extends React.Component {
         <div className="button-bar">        
           <div>
             <input className="mesinput"
+            onKeyDown={this.onEnterPress.bind(this)}
             onChange={this.onTranscriptChange.bind(this)}
              type="text" value={this.state.transcriptPart}> 
             </input>
