@@ -5,7 +5,7 @@ module.exports = {
   getEventsByUser: function(req, res) {
     var user = req.user.id;
     Calendar
-      .where({ user })
+      .where({ user: user })
       .fetchAll()
       .then(events => res.status(200).send(events))
       .catch(err => res.send(err));
