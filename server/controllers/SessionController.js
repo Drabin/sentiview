@@ -133,9 +133,7 @@ module.exports = {
   },
 
   sessionNotes: function(req, res) {
-    console.log(req.body);
     var notes = req.body.notes;
-    console.log(notes);
     var session = req.body.session;
     fs.writeFile(__dirname + "/../notes/" + session, notes, function(err) {
       if(err) {
@@ -143,6 +141,7 @@ module.exports = {
       }
 
       console.log("The file was saved!");
+      res.send(200, "The file was saved!");
     });
   },
 

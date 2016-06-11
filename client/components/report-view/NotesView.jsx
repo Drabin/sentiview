@@ -9,6 +9,7 @@ export default class SessionTranscript extends React.Component {
 			currentUserId: null,
 			showEmailForm: false,
 			showSavedNotes: false,
+			showConfirmMes: false,
 			notes: '',
 		};
 		this.getSavedNotes = this.getSavedNotes.bind(this);
@@ -21,8 +22,22 @@ export default class SessionTranscript extends React.Component {
 	onNotesChange(e){
 		this.setState({
 			notes: e.target.value
-		});
-		
+		});		
+	}
+
+	displayConfirm(){
+		console.log('in here')
+		this.setState({
+			showConfirmMes: true
+		}, function(){
+			console.log('in the next one')
+			setTimeout(function(){
+			console.log('in the last one')
+				this.setState({
+				  showConfirmMes: false	
+				})
+			}.bind(this),2000)
+		}.bind(this))
 	}
 
     getSavedNotes() {
@@ -51,13 +66,13 @@ export default class SessionTranscript extends React.Component {
 		        session: sessionId[sessionId.length - 1],
 		        notes: notes,
 		      },
-		      success: function() {
+		      success: function(data) {
 		        console.log('posted notes');
-		      },
+		        this.displayConfirm()
+		      }.bind(this),
 		      error: function(error) {
 		        console.error('posting notes error', error);
 		      },
-		      dataType: 'json'
 	    });
 	}
 
@@ -76,11 +91,14 @@ export default class SessionTranscript extends React.Component {
 	render(){
 		return (
 			<div>
-			  <textarea rows="30" cols="100"
-              value={this.state.notes}
-			  onChange={this.onNotesChange.bind(this)}>
-			  </textarea>
-			  <div>
+			  <span className="notes-area">
+				  <textarea  rows="30" cols="100"
+	              value={this.state.notes}
+				  onChange={this.onNotesChange.bind(this)}>
+				  </textarea>
+			  </span>
+				{ this.state.showConfirmMes ? <div className="conformationmsg">Notes saved</div> : null }
+				<div>
 			  <span>  
 			    <button className="savenotebtn" 
 			    onClick={this.saveNotes.bind(this)}>Save Notes</button>
