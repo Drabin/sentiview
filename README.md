@@ -1,6 +1,6 @@
-# Sentimize
+# Sentiview
 
-  Sentimize provides human emotion analysis during video recording for interviews and training.
+  Sentiview provides a new way to interview, incorporating face analysis to help you make more informed decisions.
 
 ## Table of Contents
 1. [Usage](#Usage)
@@ -16,28 +16,36 @@
 
 ## Usage
 
-Landingpage:
-![screen shot 2016-06-06 at 20 10 44](https://cloud.githubusercontent.com/assets/10008938/15844915/2478c052-2c23-11e6-8069-5ed2edce3c05.png)
+Landing Page:
+![landing_page](https://raw.githubusercontent.com/crypticzoologists/sentiview/master/screenshots/landing_page.png)
+
 Login:
-![screen shot 2016-06-06 at 20 11 19](https://cloud.githubusercontent.com/assets/10008938/15844918/2796150a-2c23-11e6-98ab-8042cbf48ea1.png)
+![login_page](https://raw.githubusercontent.com/crypticzoologists/sentiview/master/screenshots/login_page.png)
+
 Home:
-![screen shot 2016-06-06 at 20 08 50](https://cloud.githubusercontent.com/assets/10008938/15844927/334263b8-2c23-11e6-94f4-d9a040efdfd1.png)
+![home_page](https://raw.githubusercontent.com/crypticzoologists/sentiview/master/screenshots/home_page.png)
+
 Record:
-![screen shot 2016-06-06 at 20 10 18](https://cloud.githubusercontent.com/assets/10008938/15844922/2cdbb236-2c23-11e6-9f2d-4adf4d9b0f79.png)
+![record_page](https://raw.githubusercontent.com/crypticzoologists/sentiview/master/screenshots/record_page.png)
+
 Graphs:
-![screen shot 2016-06-06 at 20 09 39](https://cloud.githubusercontent.com/assets/10008938/15844923/2f5013c2-2c23-11e6-8608-607eff0c4da8.png)
+![graphs_page](https://raw.githubusercontent.com/crypticzoologists/sentiview/master/screenshots/session_page.png)
+
 Session Overview:
-![screen shot 2016-06-06 at 20 09 18](https://cloud.githubusercontent.com/assets/10008938/15844924/3144420c-2c23-11e6-920e-c4ebdc5dea55.png)
+![sessions_page](https://github.com/crypticzoologists/sentiview/blob/master/screenshots/sessions_page.png?raw=true)
+
+Calendar:
+![calendar_page](https://raw.githubusercontent.com/crypticzoologists/sentiview/master/screenshots/calendar_page.png)
 
 ## Getting started
 
 #### 1. Clone the latest version
 
-  Start by cloning the latest version of Sentimize on your local machine by running:
+  Start by cloning the latest version of Sentiview on your local machine by running:
 
   ```sh
-  $ git clone https://github.com/crypticzoologists/sentimize
-  $ cd sentimize
+  $ git clone https://github.com/crypticzoologists/sentiview
+  $ cd sentiview
   ```
 
 #### 2. Install Dependencies
@@ -135,6 +143,8 @@ Session Overview:
 │     ├── /main-layout/         # Main Layout components
 │     ├── /record-view/         # Record view components
 │     ├── /report-view/         # Reporting view components
+│     ├── /calendar-view/       # Calendar view components
+│     ├── /sessions-view/       # Sessions view components
 │     ├── /App.jsx/             # Main React App
 │   ├── /lib/                   # Lib files, e.g. from FACE API
 │   ├── /style/                 # CSS Style files
