@@ -1292,28 +1292,39 @@ var Emailform = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'record-instructions pure-u-1-1' },
+        null,
         _react2.default.createElement(
           'h2',
-          null,
+          { className: 'emailheader' },
           'Email notes'
         ),
         _react2.default.createElement(
           'form',
-          { action: '', className: 'pure-form' },
+          { action: '', className: 'pure-form pure-form-aligned' },
           _react2.default.createElement(
             'fieldset',
             { id: 'pure-form-group', className: 'pure-group' },
-            _react2.default.createElement('input', { type: 'text', name: 'Subject',
-              onChange: this.onSubjectChange.bind(this),
-              value: this.state.sub, placeholder: 'Subject' }),
-            _react2.default.createElement('input', { type: 'email', name: 'To',
-              onChange: this.onReceiverChange.bind(this),
-              value: this.state.receiver, placeholder: 'Email' })
+            _react2.default.createElement(
+              'div',
+              { className: 'pure-control-group' },
+              _react2.default.createElement('label', { 'for': 'subject' }),
+              _react2.default.createElement('input', { id: 'subject', type: 'text', className: 'emailfeild',
+                placeholder: 'subject',
+                onChange: this.onReceiverChange.bind(this),
+                value: this.state.receiver })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'pure-control-group' },
+              _react2.default.createElement('input', { id: 'email', type: 'email', className: 'emailfeild',
+                placeholder: 'email to',
+                onChange: this.onSubjectChange.bind(this),
+                value: this.state.sub })
+            )
           ),
           _react2.default.createElement(
             'button',
-            _defineProperty({ className: 'emailbutn', type: 'button', onClick: this.emailNotes.bind(this) }, 'className', 'record-form-button pure-button pure-input-1-2 pure-button-primary'),
+            _defineProperty({ className: 'emailbutn', type: 'button', onClick: this.emailNotes.bind(this) }, 'className', 'sendmailbtn'),
             'Send'
           )
         )
@@ -1323,6 +1334,15 @@ var Emailform = function (_React$Component) {
 
   return Emailform;
 }(_react2.default.Component);
+
+//   <input type="text"  name='Subject'         
+//   onChange={this.onSubjectChange.bind(this)}
+//   value={this.state.sub} placeholder="Subject"></input>
+//   <input type="email"  name='To'
+//   onChange={this.onReceiverChange.bind(this)}
+//   value={this.state.receiver} placeholder="Email"></input>
+// </fieldset>
+
 
 exports.default = Emailform;
 
@@ -1442,32 +1462,33 @@ var SessionTranscript = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(
-					'span',
-					null,
-					' ',
-					_react2.default.createElement(
-						'button',
-						{ onClick: this.toggleEmailForm.bind(this) },
-						'Email notes'
-					),
-					this.state.showEmailForm ? _react2.default.createElement(_Emailform2.default, { session: this.props.sessionId, notes: this.state.notes }) : null
-				),
-				_react2.default.createElement(
-					'span',
-					{ className: 'savednote' },
-					'Notes saved!'
-				),
 				_react2.default.createElement('textarea', { rows: '30', cols: '100',
 					value: this.state.notes,
 					onChange: this.onNotesChange.bind(this) }),
 				_react2.default.createElement(
-					'span',
+					'div',
 					null,
 					_react2.default.createElement(
-						'button',
-						{ onClick: this.saveNotes.bind(this) },
-						'Save Notes'
+						'span',
+						null,
+						_react2.default.createElement(
+							'button',
+							{ className: 'savenotebtn',
+								onClick: this.saveNotes.bind(this) },
+							'Save Notes'
+						)
+					),
+					_react2.default.createElement(
+						'span',
+						null,
+						' ',
+						_react2.default.createElement(
+							'button',
+							{ className: 'sendemailbtn',
+								onClick: this.toggleEmailForm.bind(this) },
+							'Email notes'
+						),
+						this.state.showEmailForm ? _react2.default.createElement(_Emailform2.default, { session: this.props.sessionId, notes: this.state.notes }) : null
 					)
 				)
 			);

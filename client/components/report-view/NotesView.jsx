@@ -76,17 +76,20 @@ export default class SessionTranscript extends React.Component {
 	render(){
 		return (
 			<div>
-			  <span> <button onClick={this.toggleEmailForm.bind(this)}>Email notes</button>
-			  	{ this.state.showEmailForm ? < Emailform session={this.props.sessionId} notes={this.state.notes}/> : null}
-			  </span>
-			  <span className="savednote">Notes saved!</span>
 			  <textarea rows="30" cols="100"
               value={this.state.notes}
 			  onChange={this.onNotesChange.bind(this)}>
 			  </textarea>
+			  <div>
 			  <span>  
-			    <button onClick={this.saveNotes.bind(this)}>Save Notes</button>
+			    <button className="savenotebtn" 
+			    onClick={this.saveNotes.bind(this)}>Save Notes</button>
 			  </span>  
+			  <span> <button className="sendemailbtn"
+			  onClick={this.toggleEmailForm.bind(this)}>Email notes</button>
+			  	{ this.state.showEmailForm ? < Emailform session={this.props.sessionId} notes={this.state.notes}/> : null}
+			  </span>
+			  </div>
 			</div>
 		)
 	}
