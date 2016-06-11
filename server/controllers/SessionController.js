@@ -28,7 +28,7 @@ module.exports = {
   },
 
   getInterviewerSessions: function(req, res) {
-    Session.where({ interviewerId: req.user.id }).fetchAll()
+    Session.where({ interviewerId: req.user.id }).where('duration', '<>', 'Temporary Duration').fetchAll()
       .then(function(sessions) {
         res.status(200).send(sessions);
       })
@@ -38,7 +38,7 @@ module.exports = {
   },
 
   getIntervieweeSessions: function(req, res) {
-    Session.where({ intervieweeId: req.user.id }).fetchAll()
+    Session.where({ intervieweeId: req.user.id }).where('duration', '<>', 'Temporary Duration').fetchAll()
       .then(function(sessions) {
         res.status(200).send(sessions);
       })
