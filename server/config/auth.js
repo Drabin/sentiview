@@ -4,7 +4,7 @@ var User = require('../models/UserModel.js');
 
 module.exports = function(app, express, passport) {
   app.use(session({
-    name: 'sentimize',
+    name: 'sentiview',
     secret: 'crypticzoologists',
   }))
 
