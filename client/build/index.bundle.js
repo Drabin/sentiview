@@ -1070,8 +1070,7 @@ var ChatBox = function (_React$Component) {
         }.bind(this),
         error: function error(_error2) {
           console.error('failed to get name', _error2);
-        },
-        dataType: 'json'
+        }
       });
     }
   }, {
@@ -1082,6 +1081,15 @@ var ChatBox = function (_React$Component) {
       });
     }
   }, {
+    key: 'onEnterPress',
+    value: function onEnterPress(e) {
+      console.log(e.keyCode);
+      if (e.keyCode == 13) {
+        console.log('TRUE');
+        this.sendTranscript().bind(this);
+      }
+    }
+  }, {
     key: 'sendTranscript',
     value: function sendTranscript() {
       console.log('SENDING TO_____', this.props.calledUser);
@@ -1090,33 +1098,27 @@ var ChatBox = function (_React$Component) {
       if (this.props.calledUser === null) {
         var interviewee = this.state.receiver;
         this.setState({
-          transcriptPart: this.state.sender + ': ' + this.state.transcript
-        });
-        this.setState({
-          transcript: this.state.transcript.concat([this.state.transcriptPart])
-        });
-        (0, _Sockets.sendMessage)(this.props.userId, interviewee, this.state.transcriptPart);
-        this.setState({
-          transcriptPart: ''
-        });
+          transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
+        }, function () {
+          (0, _Sockets.sendMessage)(this.props.userId, interviewee, this.state.sender + ': ' + this.state.transcriptPart);
+          this.setState({
+            transcriptPart: ''
+          });
+        }.bind(this));
       } else {
         this.setState({
-          transcriptPart: this.state.sender + ': ' + this.state.transcript
-        });
-        this.setState({
-          transcript: this.state.transcript.concat([this.state.transcriptPart])
-        });
-        (0, _Sockets.sendMessage)(this.props.userId, this.props.calledUser, this.state.transcriptPart);
-        this.setState({
-          transcriptPart: ''
+          transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
+        }, function () {
+          (0, _Sockets.sendMessage)(this.props.userId, this.props.calledUser, this.state.sender + ': ' + this.state.transcriptPart);
+          this.setState({
+            transcriptPart: ''
+          });
         });
       }
-      console.log('___________  ', this.state.transcript);
     }
   }, {
     key: 'saveTranscript',
     value: function saveTranscript() {
-      console.log('hey');
       console.log('---------------', this.props.currentSession);
       var formattedTran = this.state.transcript.join('+');
       console.log('------------', formattedTran);
@@ -1160,11 +1162,17 @@ var ChatBox = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'button-bar' },
-          _react2.default.createElement('input', { onChange: this.onTranscriptChange.bind(this),
-            type: 'text', value: this.state.transcriptPart }),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement('input', { className: 'mesinput',
+              onKeyDown: this.onEnterPress.bind(this),
+              onChange: this.onTranscriptChange.bind(this),
+              type: 'text', value: this.state.transcriptPart })
+          ),
           _react2.default.createElement(
             'button',
-            { onClick: this.sendTranscript.bind(this) },
+            { className: 'sendbtn', onClick: this.sendTranscript.bind(this) },
             'send'
           )
         ),
