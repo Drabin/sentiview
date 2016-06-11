@@ -107,7 +107,7 @@ module.exports = {
     }
     Session.where(queryObj).fetch()
     .then(function(session) {
-      res.status(200).send(session);
+      res.status(200).send(session.attributes.transcript);
     })
     .catch(function(err) {
       console.error(err);

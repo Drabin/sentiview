@@ -84,9 +84,9 @@ export default class SessionTranscript extends React.Component {
               value={this.state.notes}
 			  onChange={this.onNotesChange.bind(this)}>
 			  </textarea>
-			<span>  
-			  <button onClick={this.saveNotes.bind(this)}>Save Notes</button>
-			</span>  
+			  <span>  
+			    <button onClick={this.saveNotes.bind(this)}>Save Notes</button>
+			  </span>  
 			</div>
 		)
 	}

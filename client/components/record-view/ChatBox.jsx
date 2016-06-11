@@ -150,7 +150,7 @@ export default class ChatBox extends React.Component {
         <div className="button-bar">
           <button className="stop-button pure-button pure-button-error" 
           onClick={(e) => {
-            this.saveTranscript.bind(this); 
+            this.saveTranscript(); 
             this.props.clicked(e)}}>Stop</button>
         </div>
       </div>

@@ -720,7 +720,7 @@ var ChatBox = function (_React$Component) {
             'button',
             { className: 'stop-button pure-button pure-button-error',
               onClick: function onClick(e) {
-                _this2.saveTranscript.bind(_this2);
+                _this2.saveTranscript();
                 _this2.props.clicked(e);
               } },
             'Stop'
@@ -1744,6 +1744,10 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _Emailform = require('./Emailform.jsx');
+
+var _Emailform2 = _interopRequireDefault(_Emailform);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1761,7 +1765,7 @@ var SessionTranscript = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SessionTranscript).call(this, props));
 
 		_this.state = {
-			transcriptArray: null
+			transcriptArray: []
 		};
 
 		return _this;
@@ -1771,23 +1775,21 @@ var SessionTranscript = function (_React$Component) {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
 			console.log('hello');
-			this.getTranscript(function (data) {
-				this.setState({
-					transcriptArray: data.transcript
-				});
-			});
-			console.log(this.state.currentUser);
+			this.getTranscript();
 		}
 	}, {
 		key: 'getTranscript',
-		value: function getTranscript(callback) {
+		value: function getTranscript() {
 			var sessionId = (0, _jquery2.default)(location).attr('href').split('/');
 			_jquery2.default.ajax({
 				methond: 'GET',
 				url: '/transcript/' + sessionId[sessionId.length - 1],
-				success: function success(data) {
-					console.log(data.transcript);
-				},
+				success: function (data) {
+					var temp = data.split('+');
+					this.setState({
+						transcriptArray: temp
+					});
+				}.bind(this),
 				error: function error(_error) {
 					console.error(' loading transcript Error', _error);
 				},
@@ -1800,7 +1802,19 @@ var SessionTranscript = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				null,
-				'hello'
+				_react2.default.createElement(
+					'div',
+					null,
+					this.state.transcriptArray.map(function (mes) {
+						return _react2.default.createElement(
+							'div',
+							null,
+							' ',
+							mes,
+							' '
+						);
+					})
+				)
 			);
 		}
 	}]);
@@ -1810,7 +1824,7 @@ var SessionTranscript = function (_React$Component) {
 
 exports.default = SessionTranscript;
 
-},{"jquery":98,"react":298}],14:[function(require,module,exports){
+},{"./Emailform.jsx":10,"jquery":98,"react":298}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
