@@ -157,7 +157,5 @@ module.exports = {
       console.log('WOWOWOWOW',data)
       res.status(201).send(data)
     })
-  },
-
-
+  }
 }
