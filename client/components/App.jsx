@@ -9,6 +9,7 @@ import InterviewerSessionsView from './sessions-view/InterviewerSessionsView.jsx
 import IntervieweeSessionsView from './sessions-view/IntervieweeSessionsView.jsx';
 import ReportView from './report-view/ReportView.jsx';
 import SettingsView from './settings-view/SettingsView.jsx';
+import Calendar from './calendar-view/Calendar.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class App extends React.Component {
         <Route path="/" component={MainLayout}>
           <IndexRoute component={HomeView} />
           <Route path="record(/:sessionId)" component={RecordView} />
+          <Route path="calendar" component={Calendar} />
           <Route path="sessions/interviewer" component={InterviewerSessionsView} />
           <Route path="sessions/interviewee" component={IntervieweeSessionsView} />
           <Route path="reports/:sessionId" component={ReportView} />

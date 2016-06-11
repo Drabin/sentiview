@@ -27,6 +27,9 @@ require('./routes/auth-routes.js')(app, passport);
 //Authentication check currently commented out, uncomment line to re-activate
 app.use(util.ensureAuthenticated);
 
+//Calendar routes
+require('./routes/calendar-routes.js')(app);
+
 // View Routes
 require('./routes/view-routes.js')(app);
 // API Routes
@@ -35,7 +38,7 @@ require('./routes/api-routes.js')(app);
 // Wildcard route
 app.get('/*', function(req, res) {
   res.redirect('/');
-})
+});
 
 http.listen(Number(process.env.PORT), process.env.HOST, function() {
   console.log('NODE_ENV: ' + process.env.NODE_ENV);
