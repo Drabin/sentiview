@@ -17,6 +17,7 @@ export default class SessionTranscript extends React.Component {
 
 	componentDidMount() {     	
         this.getSavedNotes();
+
     }
 
 	onNotesChange(e){
@@ -92,7 +93,7 @@ export default class SessionTranscript extends React.Component {
 		return (
 			<div>
 			  <span className="notes-area">
-				  <textarea  rows="30" cols="100"
+				  <textarea ref="note"  rows="30" cols="100"
 	              value={this.state.notes}
 				  onChange={this.onNotesChange.bind(this)}>
 				  </textarea>
