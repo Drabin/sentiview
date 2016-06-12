@@ -95,7 +95,8 @@ module.exports = {
       'transcript': req.body.transcript
     }).then(function(session){
       res.status(200).send(session);
-    }).catch(function(err) {
+    })
+    .catch(function(err) {
       console.error(err);
     })
   },
@@ -114,21 +115,19 @@ module.exports = {
     })
   },
 
-  getInterviewee : function(req, res) {
-    var parsedUrl = req.url.split('/');
+  sessionInfo : function(req, res) {
     var queryObj = {
-      id: parsedUrl[parsedUrl.length - 1]
+      id: req.query.sessionId
     }
     Session.where(queryObj).fetch()
     .then(function(session) {
-      User.where({ id: session.attributes.interviewerId }).fetch()
-      .then(function(user) {
-        console.log
-        res.send(201, user.attributes.id)
-      })
-      .catch(function(err) {
+      console.log(session.attributes);
+      res.send(200, JSON.stringify({
+        interviewee: session.attributes.intervieweeId,
+        interviewer: session.attributes.interviewerId
+      }));
+    }).catch(function(err) {
         console.error(err);
-    })
     })
   },
 

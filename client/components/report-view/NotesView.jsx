@@ -45,7 +45,7 @@ export default class SessionTranscript extends React.Component {
     	var sessionId = $(location).attr('href').split('/');
     	$.ajax({
     		type: 'GET',
-    		url: '/notes/' + sessionId[sessionId.length - 1],
+    		url: '/api/notes/' + sessionId[sessionId.length - 1],
     		success: function(notesData) {
 	    	  this.setState({
 	    		notes: notesData
@@ -62,7 +62,7 @@ export default class SessionTranscript extends React.Component {
 		var notes = this.state.notes;
 		$.ajax({
 		      method:'POST',
-		      url: '/notes',
+		      url: '/api/notes',
 		      data: {       
 		        session: sessionId[sessionId.length - 1],
 		        notes: notes,

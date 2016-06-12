@@ -10,56 +10,52 @@ export default class ChatBox extends React.Component {
     this.state = {
       transcript: [],
       transcriptPart: '',
-      sender: null,
-      receiver: null, 
+      sessionInfo: null 
     };
   socket.on('message', function(data){
     this.getMessage(data.message);
   }.bind(this))
     this.saveTranscript = this.saveTranscript.bind(this)
+    this.sessionInfo = this.sessionInfo.bind(this)
     this.sendMessage = sendMessage.bind(this)
   }
 
   componentDidMount() {
       join(this.props.userId);
-      this.getInterviewee()
-      this.getUserNames();
-  }
+      this.sessionInfo()
+      this.getUserNames();   
 
-  componentDidUpdate() {
-    var node = ReactDom.findDOMNode(this.refs.chat);
-    node.scrollTop = node.scrollHeight;
-  }    
-
-
+  };
   getMessage(message){
       this.setState({
       transcript: this.state.transcript.concat([message])
     })
   }
 
-  getInterviewee() {
-    var sessionId = $(location).attr('href').split('/');
+  sessionInfo() {  
     $.ajax({
       method:'GET',
-      url: '/interviewer/' + sessionId[sessionId.length - 1],
+      url: '/api/sessionInfo',
+      data: {
+        sessionId : this.props.currentSession
+      },
       success: function(data) {
-        console.log('fetched interviewer----', data);
+        console.log('fetched sessionInfo----', data);
         this.setState({
-          receiver: data
+          sessionInfo: data
         })
       }.bind(this),
       error: function(error) {
-        console.error('failed to get interviewer', error);
+        console.error('failed to get sessionInfo', error);
       },
-      dataType: 'json'
+      dataType: 'json',
     }); 
   }
 
   getUserNames() {
     $.ajax({
       method:'GET',
-      url: '/usernames',
+      url: '/api/usernames',
       data: {
         sender: this.props.userId,
       },
@@ -90,30 +86,23 @@ export default class ChatBox extends React.Component {
   
 
   sendTranscript(){
-    console.log('SENDING TO_____', this.props.calledUser)
-    console.log('SENDING FROM_____', this.props.userId)
-    console.log('THIS---', this.state.sender);
-   if(this.props.calledUser === null){
-      var interviewee = this.state.receiver
-      this.setState({ 
+    console.log(this.state.sessionInfo)
+    var personCalling = this.props.userId;
+    var personCalled;
+    if(personCalling === this.state.sessionInfo.interviewee){
+      personCalled = this.state.sessionInfo.interviewer
+    } else {
+      personCalled = this.state.sessionInfo.interviewee
+    }
+    this.setState({ 
       transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
     }, function(){      
-    sendMessage(this.props.userId, interviewee, this.state.sender + ': ' + this.state.transcriptPart);
+    sendMessage(this.props.userId, personCalled, this.state.sender + ': ' + this.state.transcriptPart);
       this.setState({
         transcriptPart: ''
       })
     }.bind(this))
-   } else {
-    this.setState({ 
-        transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
-    }, function(){
-      sendMessage(this.props.userId, this.props.calledUser, this.state.sender + ': ' + this.state.transcriptPart);
-      this.setState({
-        transcriptPart: ''
-      })      
-    })
-   }
-  }
+   } 
 
 
   saveTranscript(){
@@ -122,7 +111,7 @@ export default class ChatBox extends React.Component {
     console.log('------------',formattedTran);
     $.ajax({
       method:'POST',
-      url: '/transcript',
+      url: '/api/transcript',
       data: {       
         session: this.props.currentSession,
         transcript: formattedTran,
