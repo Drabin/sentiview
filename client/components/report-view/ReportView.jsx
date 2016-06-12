@@ -114,7 +114,7 @@ export default class ChartComponent extends React.Component {
           console.log(this.state);
       }.bind(this)
     })
-    $
+    
 
   };
 

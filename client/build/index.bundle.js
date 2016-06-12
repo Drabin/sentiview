@@ -1009,13 +1009,13 @@ var ChatBox = function (_React$Component) {
     _this.state = {
       transcript: [],
       transcriptPart: '',
-      sender: null,
-      receiver: null
+      sessionInfo: null
     };
     _Sockets.socket.on('message', function (data) {
       this.getMessage(data.message);
     }.bind(_this));
     _this.saveTranscript = _this.saveTranscript.bind(_this);
+    _this.sessionInfo = _this.sessionInfo.bind(_this);
     _this.sendMessage = _Sockets.sendMessage.bind(_this);
     return _this;
   }
@@ -1024,14 +1024,8 @@ var ChatBox = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       (0, _Sockets.join)(this.props.userId);
-      this.getInterviewee();
+      this.sessionInfo();
       this.getUserNames();
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      var node = _reactDom2.default.findDOMNode(this.refs.chat);
-      node.scrollTop = node.scrollHeight;
     }
   }, {
     key: 'getMessage',
@@ -1041,20 +1035,22 @@ var ChatBox = function (_React$Component) {
       });
     }
   }, {
-    key: 'getInterviewee',
-    value: function getInterviewee() {
-      var sessionId = (0, _jquery2.default)(location).attr('href').split('/');
+    key: 'sessionInfo',
+    value: function sessionInfo() {
       _jquery2.default.ajax({
         method: 'GET',
-        url: '/interviewer/' + sessionId[sessionId.length - 1],
+        url: '/api/sessionInfo',
+        data: {
+          sessionId: this.props.currentSession
+        },
         success: function (data) {
-          console.log('fetched interviewer----', data);
+          console.log('fetched sessionInfo----', data);
           this.setState({
-            receiver: data
+            sessionInfo: data
           });
         }.bind(this),
         error: function error(_error) {
-          console.error('failed to get interviewer', _error);
+          console.error('failed to get sessionInfo', _error);
         },
         dataType: 'json'
       });
@@ -1064,7 +1060,7 @@ var ChatBox = function (_React$Component) {
     value: function getUserNames() {
       _jquery2.default.ajax({
         method: 'GET',
-        url: '/usernames',
+        url: '/api/usernames',
         data: {
           sender: this.props.userId
         },
@@ -1098,29 +1094,22 @@ var ChatBox = function (_React$Component) {
   }, {
     key: 'sendTranscript',
     value: function sendTranscript() {
-      console.log('SENDING TO_____', this.props.calledUser);
-      console.log('SENDING FROM_____', this.props.userId);
-      console.log('THIS---', this.state.sender);
-      if (this.props.calledUser === null) {
-        var interviewee = this.state.receiver;
-        this.setState({
-          transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
-        }, function () {
-          (0, _Sockets.sendMessage)(this.props.userId, interviewee, this.state.sender + ': ' + this.state.transcriptPart);
-          this.setState({
-            transcriptPart: ''
-          });
-        }.bind(this));
+      console.log(this.state.sessionInfo);
+      var personCalling = this.props.userId;
+      var personCalled;
+      if (personCalling === this.state.sessionInfo.interviewee) {
+        personCalled = this.state.sessionInfo.interviewer;
       } else {
-        this.setState({
-          transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
-        }, function () {
-          (0, _Sockets.sendMessage)(this.props.userId, this.props.calledUser, this.state.sender + ': ' + this.state.transcriptPart);
-          this.setState({
-            transcriptPart: ''
-          });
-        });
+        personCalled = this.state.sessionInfo.interviewee;
       }
+      this.setState({
+        transcript: this.state.transcript.concat(this.state.sender + ': ' + this.state.transcriptPart)
+      }, function () {
+        (0, _Sockets.sendMessage)(this.props.userId, personCalled, this.state.sender + ': ' + this.state.transcriptPart);
+        this.setState({
+          transcriptPart: ''
+        });
+      }.bind(this));
     }
   }, {
     key: 'saveTranscript',
@@ -1130,7 +1119,7 @@ var ChatBox = function (_React$Component) {
       console.log('------------', formattedTran);
       _jquery2.default.ajax({
         method: 'POST',
-        url: '/transcript',
+        url: '/api/transcript',
         data: {
           session: this.props.currentSession,
           transcript: formattedTran
@@ -1912,7 +1901,7 @@ var SessionTranscript = function (_React$Component) {
 			var sessionId = (0, _jquery2.default)(location).attr('href').split('/');
 			_jquery2.default.ajax({
 				type: 'GET',
-				url: '/notes/' + sessionId[sessionId.length - 1],
+				url: '/api/notes/' + sessionId[sessionId.length - 1],
 				success: function (notesData) {
 					this.setState({
 						notes: notesData
@@ -1930,7 +1919,7 @@ var SessionTranscript = function (_React$Component) {
 			var notes = this.state.notes;
 			_jquery2.default.ajax({
 				method: 'POST',
-				url: '/notes',
+				url: '/api/notes',
 				data: {
 					session: sessionId[sessionId.length - 1],
 					notes: notes
@@ -2159,7 +2148,6 @@ var ChartComponent = function (_React$Component) {
           console.log(this.state);
         }.bind(this)
       });
-      _jquery2.default;
     }
   }, {
     key: 'toggleTranscriptView',
@@ -2314,7 +2302,7 @@ var SessionTranscript = function (_React$Component) {
 			var sessionId = (0, _jquery2.default)(location).attr('href').split('/');
 			_jquery2.default.ajax({
 				methond: 'GET',
-				url: '/transcript/' + sessionId[sessionId.length - 1],
+				url: '/api/transcript/' + sessionId[sessionId.length - 1],
 				success: function (data) {
 					var temp = data.split('+');
 					this.setState({

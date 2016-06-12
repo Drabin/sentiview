@@ -21,7 +21,7 @@ export default class SessionTranscript extends React.Component {
 		var sessionId = $(location).attr('href').split('/');
 	  	$.ajax({
 			methond:'GET',
-			url: '/transcript/' + sessionId[sessionId.length - 1],
+			url: '/api/transcript/' + sessionId[sessionId.length - 1],
 			success: function(data){
 				var temp = data.split('+')
 				this.setState({					
